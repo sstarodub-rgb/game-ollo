@@ -1,0 +1,208 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bg-dark: #1c1611;
+    --bg-panel: #e8d7b5;
+    --bg-panel-dark: #d6c19a;
+    --border: #6b4f2a;
+    --gold: #c89b3c;
+    --text-dark: #2b1f14;
+    --shadow: rgba(0, 0, 0, 0.35);
+}
+
+body {
+    min-height: 100vh;
+    background: var(--bg-dark);
+    font-family: "Merriweather", serif;
+    color: var(--text-dark);
+    padding: 20px;
+}
+
+#game {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.hero-panel {
+    background: linear-gradient(
+        to bottom,
+        #f0dfba,
+        #dbc69c
+    );
+    border: 3px solid var(--border);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 6px 20px var(--shadow);
+}
+
+.game-title {
+    text-align: center;
+    font-family: "Cinzel", serif;
+    font-size: 2rem;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+    color: #4a2d12;
+}
+
+.player-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.stat-card {
+    flex: 1;
+    min-width: 140px;
+    background: rgba(255,255,255,0.25);
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    padding: 12px;
+}
+
+.stat-label {
+    display: block;
+    font-size: 0.8rem;
+    margin-bottom: 6px;
+    color: #5f4827;
+    text-transform: uppercase;
+}
+
+.world-layout {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+}
+
+.panel {
+    background: linear-gradient(
+        to bottom,
+        var(--bg-panel),
+        var(--bg-panel-dark)
+    );
+    border: 3px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 6px 20px var(--shadow);
+}
+
+.panel-header {
+    background: #b89253;
+    color: #fff8e8;
+    font-family: "Cinzel", serif;
+    font-size: 1.1rem;
+    padding: 14px 18px;
+    border-bottom: 2px solid var(--border);
+}
+
+.map-panel {
+    min-height: 600px;
+}
+
+#world-map {
+    position: relative;
+    height: 540px;
+    margin: 20px;
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    background:
+        radial-gradient(circle at center, #f2e5c6 0%, #e1cca2 100%);
+}
+
+.city-panel {
+    min-height: 280px;
+}
+
+#city-info {
+    padding: 20px;
+}
+
+#city-name {
+    font-family: "Cinzel", serif;
+    margin-bottom: 12px;
+}
+
+#city-description {
+    line-height: 1.7;
+    margin-bottom: 20px;
+}
+
+.city-actions {
+    display: flex;
+    gap: 10px;
+}
+
+button {
+    border: 2px solid var(--border);
+    background: var(--gold);
+    color: #2b1f14;
+    font-weight: bold;
+    padding: 10px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+button:hover {
+    transform: translateY(-2px);
+}
+
+.log-panel {
+    grid-column: 1 / -1;
+}
+
+#game-log {
+    padding: 20px;
+}
+
+.log-entry {
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(107, 79, 42, 0.25);
+}
+
+.log-entry:last-child {
+    border-bottom: none;
+}
+
+/* Будущие города на карте */
+
+.city-marker {
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #8a1f11;
+    border: 2px solid #fff;
+    cursor: pointer;
+    transform: translate(-50%, -50%);
+}
+
+.city-marker:hover {
+    transform: translate(-50%, -50%) scale(1.2);
+}
+
+.city-marker.active {
+    background: var(--gold);
+}
+
+@media (max-width: 900px) {
+    .world-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .map-panel {
+        min-height: auto;
+    }
+
+    #world-map {
+        height: 420px;
+    }
+
+    .player-bar {
+        flex-direction: column;
+    }
+}
