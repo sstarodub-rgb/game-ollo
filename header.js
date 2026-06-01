@@ -1,91 +1,53 @@
-alert("HEADER.JS ЗАГРУЖЕН");
-
 const SAVE_KEY = "merchantGame";
 
 function getPlayer() {
-    try {
-        const data = localStorage.getItem(SAVE_KEY);
-        return data ? JSON.parse(data) : null;
-    } catch (e) {
-        alert("ОШИБКА LOCALSTORAGE");
-        return null;
-    }
+  const data = localStorage.getItem(SAVE_KEY);
+  return data ? JSON.parse(data) : null;
 }
 
-function createDefaultPlayer() {
-    return {
-        name: generateName(),
-        gold: 100,
-        day: 1,
-        cityId: 1,
-        transport: {
-            name: "Осёл",
-            capacity: 100
-        },
-        weight: 0
-    };
+function createPlayer() {
+  const names = ["Эйрик", "Торвин", "Гарет", "Мирон", "Лорик"];
+  return {
+    name: names[Math.floor(Math.random() * names.length)],
+    gold: 100,
+    day: 1,
+    transport: { name: "Осёл", capacity: 100 },
+    weight: 0
+  };
 }
 
-function generateName() {
-    const names = ["Эйрик", "Торвин", "Гарет", "Мирон", "Лорик"];
-    return names[Math.floor(Math.random() * names.length)];
-}
-
-function savePlayer(player) {
-    localStorage.setItem(SAVE_KEY, JSON.stringify(player));
+function savePlayer(p) {
+  localStorage.setItem(SAVE_KEY, JSON.stringify(p));
 }
 
 function resetGame() {
-    const player = createDefaultPlayer();
-    savePlayer(player);
-    location.reload();
+  savePlayer(createPlayer());
+  location.reload();
 }
 
 function renderHeader() {
-    alert("RENDER HEADER START");
+  const player = getPlayer();
 
-    const player = getPlayer();
+  const el = document.createElement("div");
+  el.className = "game-header";
 
-    const header = document.createElement("div");
-    header.className = "game-header";
+  if (!player) {
+    el.innerHTML = `<button id="reset">🔄 Reset</button>`;
+    document.body.prepend(el);
+    document.getElementById("reset").onclick = resetGame;
+    return;
+  }
 
-    if (!player) {
-        header.innerHTML = `
-            <button class="reset-btn" id="reset-game">
-                🔄 Reset Game
-            </button>
-        `;
+  el.innerHTML = `
+    <div style="display:flex;gap:8px;font-size:12px;color:#fff;background:#222;padding:6px;">
+      <span>👤 ${player.name}</span>
+      <span>💰 ${player.gold}</span>
+      <span>🐴 ${player.transport.name}</span>
+      <span>⚖ ${player.weight}/${player.transport.capacity}</span>
+    </div>
+  `;
 
-        document.body.prepend(header);
-
-        const btn = document.getElementById("reset-game");
-        if (btn) {
-            btn.addEventListener("click", resetGame);
-        }
-
-        alert("NO PLAYER - RESET MODE");
-        return;
-    }
-
-    header.innerHTML = `
-        <div class="hud">
-            <span>👤 ${player.name}</span>
-            <span>💰 ${player.gold}</span>
-            <span>🐴 ${player.transport.name}</span>
-            <span>⚖ ${player.weight}/${player.transport.capacity}</span>
-        </div>
-    `;
-
-    document.body.prepend(header);
-
-    alert("HEADER RENDERED");
+  document.body.prepend(el);
 }
 
-/* безопасный запуск */
-(function boot() {
-    if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", renderHeader);
-    } else {
-        renderHeader();
-    }
-})();
+renderHeader();
