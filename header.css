@@ -1,44 +1,42 @@
-.game-header {
-    position: sticky;
-    top: 0;
-    z-index: 999;
+#game-header {
+  position: sticky;
+  top: 0;
+  z-index: 999;
 
-    background: linear-gradient(to right, #2b1f14, #3a2a1b);
-    border-bottom: 2px solid #c89b3c;
+  background: linear-gradient(to right, #2b1f14, #3a2a1b);
+  border-bottom: 2px solid #c89b3c;
 
-    padding: 8px 10px;
+  padding: 8px 10px;
 }
 
-/* HUD строка */
-.hud {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.header-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 
-    font-family: "Merriweather", serif;
-    font-size: 12px;
-    color: #f5e6c8;
+  font-family: "Merriweather", serif;
+  font-size: 12px;
+  color: #f5e6c8;
 
-    white-space: nowrap;
-    overflow-x: auto;
-    gap: 10px;
+  white-space: nowrap;
+  overflow-x: auto;
+  gap: 10px;
 }
 
-.hud span {
-    padding: 4px 8px;
-    background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(200,155,60,0.4);
-    border-radius: 6px;
-    flex-shrink: 0;
+.header-info span {
+  padding: 4px 8px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(200,155,60,0.4);
+  border-radius: 6px;
+  flex-shrink: 0;
 }
 
-/* RESET кнопка */
-.reset-btn {
-    width: 100%;
-    background: transparent;
-    border: 2px dashed #c89b3c;
-    color: #f5e6c8;
-    padding: 10px;
-    font-size: 14px;
-    border-radius: 10px;
+.header-reset-btn {
+  width: 100%;
+  background: transparent;
+  border: 2px dashed #c89b3c;
+  color: #f5e6c8;
+  padding: 10px;
+  font-size: 14px;
+  border-radius: 10px;
 }
