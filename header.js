@@ -1,25 +1,77 @@
-alert("1");
+const SAVE_KEY = "merchantGame";
 
-document.addEventListener("DOMContentLoaded", () => {
-  alert("2");
+function getPlayer() {
+  try {
+    const data = localStorage.getItem(SAVE_KEY);
+    return data ? JSON.parse(data) : null;
+  } catch {
+    return null;
+  }
+}
 
-  const header = document.createElement("div");
+function createDefaultPlayer() {
+  const names = ["Эйрик", "Торвин", "Гарет", "Мирон", "Лорик"];
 
-  header.style.position = "fixed";
-  header.style.top = "0";
-  header.style.left = "0";
-  header.style.right = "0";
-  header.style.height = "60px";
-  header.style.background = "red";
-  header.style.color = "white";
-  header.style.zIndex = "999999";
-  header.style.display = "flex";
-  header.style.alignItems = "center";
-  header.style.justifyContent = "center";
+  return {
+    name: names[Math.floor(Math.random() * names.length)],
+    gold: 100,
+    cityId: 1,
+    weight: 0,
+    transport: {
+      name: "Осёл",
+      capacity: 100
+    }
+  };
+}
 
-  header.textContent = "HEADER TEST";
+function savePlayer(player) {
+  localStorage.setItem(SAVE_KEY, JSON.stringify(player));
+}
 
-  document.body.appendChild(header);
+function createNewGame() {
+  const player = createDefaultPlayer();
+  savePlayer(player);
+  location.reload();
+}
 
-  alert("3");
-});
+function renderHeader() {
+  const oldHeader = document.getElementById("game-header");
+
+  if (oldHeader) {
+    oldHeader.remove();
+  }
+
+  const player = getPlayer();
+
+  const header = document.createElement("header");
+  header.id = "game-header";
+
+  if (!player) {
+    header.innerHTML = `
+      <button id="reset-game-btn" class="header-reset-btn">
+        🔄
+      </button>
+    `;
+
+    document.body.prepend(header);
+
+    document
+      .getElementById("reset-game-btn")
+      .addEventListener("click", createNewGame);
+
+    return;
+  }
+
+  header.innerHTML = `
+    <div class="header-info">
+      <span>👤 ${player.name}</span>
+      <span>💰 ${player.gold}</span>
+      <span>🐴 ${player.transport.name}</span>
+      <span>⚖ ${player.weight}/${player.transport.capacity}</span>
+    </div>
+  `;
+
+  document.body.prepend(header);
+}
+
+renderHeader();
