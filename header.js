@@ -1,54 +1,25 @@
-const SAVE_KEY = "merchantGame";
+alert("1");
 
-function getPlayer() {
-  const data = localStorage.getItem(SAVE_KEY);
-  return data ? JSON.parse(data) : null;
-}
+document.addEventListener("DOMContentLoaded", () => {
+  alert("2");
 
-function createPlayer() {
-  const names = ["Эйрик", "Торвин", "Гарет", "Мирон", "Лорик"];
+  const header = document.createElement("div");
 
-  return {
-    name: names[Math.floor(Math.random() * names.length)],
-    gold: 100,
-    day: 1,
-    transport: { name: "Осёл", capacity: 100 },
-    weight: 0
-  };
-}
+  header.style.position = "fixed";
+  header.style.top = "0";
+  header.style.left = "0";
+  header.style.right = "0";
+  header.style.height = "60px";
+  header.style.background = "red";
+  header.style.color = "white";
+  header.style.zIndex = "999999";
+  header.style.display = "flex";
+  header.style.alignItems = "center";
+  header.style.justifyContent = "center";
 
-function savePlayer(p) {
-  localStorage.setItem(SAVE_KEY, JSON.stringify(p));
-}
+  header.textContent = "HEADER TEST";
 
-function resetGame() {
-  savePlayer(createPlayer());
-  location.reload();
-}
+  document.body.appendChild(header);
 
-function renderHeader() {
-  const player = getPlayer();
-
-  const el = document.createElement("div");
-  el.className = "game-header";
-
-  if (!player) {
-    el.innerHTML = `<button id="reset">🔄 Reset</button>`;
-    document.body.insertBefore(el, document.body.firstChild);
-    document.getElementById("reset").onclick = resetGame;
-    return;
-  }
-
-  el.innerHTML = `
-    <div style="position:fixed;top:0;left:0;right:0;display:flex;gap:8px;font-size:12px;color:#fff;background:#222;padding:6px;z-index:9999">
-      <span>👤 ${player.name}</span>
-      <span>💰 ${player.gold}</span>
-      <span>🐴 ${player.transport.name}</span>
-      <span>⚖ ${player.weight}/${player.transport.capacity}</span>
-    </div>
-  `;
-
-  document.body.insertBefore(el, document.body.firstChild);
-}
-
-renderHeader();
+  alert("3");
+});
