@@ -1,18 +1,11 @@
 const SAVE_KEY = "merchantGame";
 
 function getPlayer() {
-    let data = localStorage.getItem(SAVE_KEY);
-
-    if (!data) {
-        const newPlayer = createPlayer();
-        localStorage.setItem(SAVE_KEY, JSON.stringify(newPlayer));
-        return newPlayer;
-    }
-
-    return JSON.parse(data);
+    const data = localStorage.getItem(SAVE_KEY);
+    return data ? JSON.parse(data) : null;
 }
 
-function createPlayer() {
+function createDefaultPlayer() {
     return {
         name: generateName(),
         gold: 100,
@@ -27,16 +20,19 @@ function createPlayer() {
 }
 
 function generateName() {
-    const names = [
-        "Эйрик",
-        "Торвин",
-        "Гарет",
-        "Мирон",
-        "Лорик",
-        "Далвин"
-    ];
-
+    const names = ["Эйрик", "Торвин", "Гарет", "Мирон", "Лорик"];
     return names[Math.floor(Math.random() * names.length)];
+}
+
+function savePlayer(player) {
+    localStorage.setItem(SAVE_KEY, JSON.stringify(player));
+}
+
+function resetGame() {
+    const player = createDefaultPlayer();
+    savePlayer(player);
+
+    location.reload();
 }
 
 function renderHeader() {
@@ -45,12 +41,38 @@ function renderHeader() {
     const header = document.createElement("div");
     header.className = "game-header";
 
+    if (!player) {
+        header.innerHTML = `
+            <button class="reset-btn" id="reset-game">
+                🔄 Reset Game
+            </button>
+        `;
+
+        document.body.prepend(header);
+
+        document.getElementById("reset-game")
+            .addEventListener("click", resetGame);
+
+        return;
+    }
+
     header.innerHTML = `
         <div class="hud">
-            <span class="hud-name">${player.name}</span>
-            <span class="hud-gold">💰 ${player.gold}</span>
-            <span class="hud-transport">🐴 ${player.transport.name}</span>
-            <span class="hud-weight">⚖ ${player.weight}/${player.transport.capacity}</span>
+            <span class="hud-name">
+                👤 ${player.name}
+            </span>
+
+            <span class="hud-gold">
+                💰 ${player.gold}
+            </span>
+
+            <span class="hud-transport">
+                🐴 ${player.transport.name}
+            </span>
+
+            <span class="hud-weight">
+                ⚖ ${player.weight}/${player.transport.capacity}
+            </span>
         </div>
     `;
 
