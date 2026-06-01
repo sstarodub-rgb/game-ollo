@@ -1,42 +1,58 @@
 #game-header {
   position: sticky;
   top: 0;
-  z-index: 999;
-
-  background: linear-gradient(to right, #2b1f14, #3a2a1b);
-  border-bottom: 2px solid #c89b3c;
+  z-index: 1000;
 
   padding: 8px 10px;
+
+  background: linear-gradient(
+    to bottom,
+    var(--panel-bg-top),
+    var(--panel-bg-bottom)
+  );
+
+  border-bottom: 1px solid var(--panel-border);
 }
 
 .header-info {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
+  gap: 8px;
 
-  font-family: "Merriweather", serif;
-  font-size: 12px;
-  color: #f5e6c8;
+  color: var(--text-main);
 
-  white-space: nowrap;
-  overflow-x: auto;
-  gap: 10px;
+  font-family: var(--font-text);
+  font-size: 16px;
 }
 
 .header-info span {
-  padding: 4px 8px;
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(200,155,60,0.4);
-  border-radius: 6px;
-  flex-shrink: 0;
+  white-space: nowrap;
 }
 
-.header-reset-btn {
+.header-reset {
+  display: flex;
+  justify-content: center;
+}
+
+.header-delete-btn {
   width: 100%;
-  background: transparent;
-  border: 2px dashed #c89b3c;
-  color: #f5e6c8;
+
   padding: 10px;
-  font-size: 14px;
+
+  border: 1px solid var(--gold);
   border-radius: 10px;
+
+  background: linear-gradient(
+    to bottom,
+    var(--button-top),
+    var(--button-bottom)
+  );
+
+  color: var(--gold-light);
+
+  font-family: var(--font-title);
+  font-size: 16px;
+
+  cursor: pointer;
 }
