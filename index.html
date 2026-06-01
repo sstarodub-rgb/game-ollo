@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="ru">
-<head>
+  <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -11,46 +11,37 @@
     <link rel="stylesheet" href="./log.css">
 
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet">
-</head>
 
-<body>
+    <script>
+      alert("HTML JS BLOCK WORKS");
+      console.log("HTML JS BLOCK WORKS");
+    </script>
+  </head>
 
-<div id="game">
+  <body>
 
-    <!-- ЛОКАЦИЯ -->
-    <section class="panel city-panel">
-
-        <div class="panel-header">
-            Локация
-        </div>
+    <div id="game">
+      <section class="panel city-panel">
+        <div class="panel-header">Локация</div>
 
         <div id="city-info">
-
-            <h2 id="player-city-name">Ривервуд</h2>
-
-            <p id="city-description">
-                Небольшой сельскохозяйственный город.
-            </p>
-
+          <h2 id="player-city-name">Ривервуд</h2>
+          <p id="city-description">Небольшой сельскохозяйственный город.</p>
         </div>
+      </section>
 
-    </section>
-
-    <!-- КНОПКИ -->
-    <section class="actions-panel">
-
+      <section class="actions-panel">
         <button id="market-button">Рынок</button>
         <button id="stable-button">Конюх</button>
         <button id="map-button">Карта</button>
+      </section>
+    </div>
 
-    </section>
+    <script src="./header.js"></script>
 
-</div>
+    <!-- временно отключено -->
+    <!-- <script src="./log.js"></script> -->
+    <!-- <script src="./index.js"></script> -->
 
-<!-- JS ВСЕГДА ВНИЗУ -->
-<script src="./header.js"></script>
-<script src="./log.js"></script>
-<script src="./index.js"></script>
-
-</body>
+  </body>
 </html>
