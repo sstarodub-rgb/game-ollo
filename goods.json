@@ -1,0 +1,212 @@
+[
+  {
+    "id": 1,
+    "name": "Зерно",
+    "category": "food",
+    "weight": 5,
+    "basePrice": 12
+  },
+  {
+    "id": 2,
+    "name": "Мука",
+    "category": "food",
+    "weight": 5,
+    "basePrice": 18
+  },
+  {
+    "id": 3,
+    "name": "Хлеб",
+    "category": "food",
+    "weight": 2,
+    "basePrice": 10
+  },
+  {
+    "id": 4,
+    "name": "Рыба",
+    "category": "food",
+    "weight": 4,
+    "basePrice": 22
+  },
+  {
+    "id": 5,
+    "name": "Сушёная рыба",
+    "category": "food",
+    "weight": 2,
+    "basePrice": 35
+  },
+  {
+    "id": 6,
+    "name": "Мясо",
+    "category": "food",
+    "weight": 5,
+    "basePrice": 30
+  },
+  {
+    "id": 7,
+    "name": "Соль",
+    "category": "food",
+    "weight": 3,
+    "basePrice": 25
+  },
+  {
+    "id": 8,
+    "name": "Мёд",
+    "category": "food",
+    "weight": 2,
+    "basePrice": 40
+  },
+  {
+    "id": 9,
+    "name": "Яблоки",
+    "category": "food",
+    "weight": 4,
+    "basePrice": 14
+  },
+  {
+    "id": 10,
+    "name": "Вино",
+    "category": "food",
+    "weight": 6,
+    "basePrice": 60
+  },
+  {
+    "id": 11,
+    "name": "Ткань",
+    "category": "craft",
+    "weight": 4,
+    "basePrice": 50
+  },
+  {
+    "id": 12,
+    "name": "Шерсть",
+    "category": "craft",
+    "weight": 5,
+    "basePrice": 28
+  },
+  {
+    "id": 13,
+    "name": "Кожа",
+    "category": "craft",
+    "weight": 4,
+    "basePrice": 45
+  },
+  {
+    "id": 14,
+    "name": "Верёвка",
+    "category": "craft",
+    "weight": 3,
+    "basePrice": 20
+  },
+  {
+    "id": 15,
+    "name": "Свечи",
+    "category": "craft",
+    "weight": 1,
+    "basePrice": 15
+  },
+  {
+    "id": 16,
+    "name": "Посуда",
+    "category": "craft",
+    "weight": 5,
+    "basePrice": 35
+  },
+  {
+    "id": 17,
+    "name": "Стекло",
+    "category": "craft",
+    "weight": 4,
+    "basePrice": 70
+  },
+  {
+    "id": 18,
+    "name": "Бумага",
+    "category": "craft",
+    "weight": 2,
+    "basePrice": 32
+  },
+  {
+    "id": 19,
+    "name": "Книги",
+    "category": "craft",
+    "weight": 3,
+    "basePrice": 120
+  },
+  {
+    "id": 20,
+    "name": "Чернила",
+    "category": "craft",
+    "weight": 1,
+    "basePrice": 55
+  },
+  {
+    "id": 21,
+    "name": "Древесина",
+    "category": "resource",
+    "weight": 10,
+    "basePrice": 18
+  },
+  {
+    "id": 22,
+    "name": "Уголь",
+    "category": "resource",
+    "weight": 8,
+    "basePrice": 24
+  },
+  {
+    "id": 23,
+    "name": "Железная руда",
+    "category": "resource",
+    "weight": 12,
+    "basePrice": 30
+  },
+  {
+    "id": 24,
+    "name": "Железо",
+    "category": "resource",
+    "weight": 8,
+    "basePrice": 65
+  },
+  {
+    "id": 25,
+    "name": "Медь",
+    "category": "resource",
+    "weight": 7,
+    "basePrice": 55
+  },
+  {
+    "id": 26,
+    "name": "Серебро",
+    "category": "resource",
+    "weight": 2,
+    "basePrice": 180
+  },
+  {
+    "id": 27,
+    "name": "Шёлк",
+    "category": "luxury",
+    "weight": 1,
+    "basePrice": 220
+  },
+  {
+    "id": 28,
+    "name": "Пряности",
+    "category": "luxury",
+    "weight": 1,
+    "basePrice": 250
+  },
+  {
+    "id": 29,
+    "name": "Драгоценные камни",
+    "category": "luxury",
+    "weight": 0.5,
+    "basePrice": 500
+  },
+  {
+    "id": 30,
+    "name": "Благовония",
+    "category": "luxury",
+    "weight": 1,
+    "basePrice": 180
+  }
+]
