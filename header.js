@@ -1,66 +1,55 @@
-const SAVE_KEY = "merchantGame";
+const STORAGE_KEYS = {
+  PLAYER: "merchantGame"
+};
 
 function getPlayer() {
   try {
-    const data = localStorage.getItem(SAVE_KEY);
+    const data = localStorage.getItem(STORAGE_KEYS.PLAYER);
     return data ? JSON.parse(data) : null;
   } catch {
     return null;
   }
 }
 
-function createDefaultPlayer() {
-  const names = ["Эйрик", "Торвин", "Гарет", "Мирон", "Лорик"];
-
-  return {
-    name: names[Math.floor(Math.random() * names.length)],
-    gold: 100,
-    cityId: 1,
-    weight: 0,
-    transport: {
-      name: "Осёл",
-      capacity: 100
-    }
-  };
+function isValidPlayer(player) {
+  return (
+    player &&
+    typeof player.name === "string" &&
+    typeof player.gold === "number" &&
+    typeof player.weight === "number" &&
+    player.transport &&
+    typeof player.transport.name === "string" &&
+    typeof player.transport.capacity === "number"
+  );
 }
 
-function savePlayer(player) {
-  localStorage.setItem(SAVE_KEY, JSON.stringify(player));
-}
-
-function createNewGame() {
-  const player = createDefaultPlayer();
-  savePlayer(player);
+function resetStorage() {
+  localStorage.clear();
   location.reload();
 }
 
-function renderHeader() {
-  const oldHeader = document.getElementById("game-header");
-
-  if (oldHeader) {
-    oldHeader.remove();
-  }
-
-  const player = getPlayer();
-
+function renderResetHeader() {
   const header = document.createElement("header");
   header.id = "game-header";
 
-  if (!player) {
-    header.innerHTML = `
-      <button id="reset-game-btn" class="header-reset-btn">
-        🔄
+  header.innerHTML = `
+    <div class="header-reset">
+      <button id="reset-storage-btn" class="header-delete-btn">
+        🗑 Очистить данные
       </button>
-    `;
+    </div>
+  `;
 
-    document.body.prepend(header);
+  document.body.prepend(header);
 
-    document
-      .getElementById("reset-game-btn")
-      .addEventListener("click", createNewGame);
+  document
+    .getElementById("reset-storage-btn")
+    .addEventListener("click", resetStorage);
+}
 
-    return;
-  }
+function renderPlayerHeader(player) {
+  const header = document.createElement("header");
+  header.id = "game-header";
 
   header.innerHTML = `
     <div class="header-info">
@@ -72,6 +61,17 @@ function renderHeader() {
   `;
 
   document.body.prepend(header);
+}
+
+function renderHeader() {
+  const player = getPlayer();
+
+  if (!isValidPlayer(player)) {
+    renderResetHeader();
+    return;
+  }
+
+  renderPlayerHeader(player);
 }
 
 renderHeader();
