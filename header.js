@@ -1,8 +1,12 @@
 const SAVE_KEY = "merchantGame";
 
 function getPlayer() {
-    const data = localStorage.getItem(SAVE_KEY);
-    return data ? JSON.parse(data) : null;
+    try {
+        const data = localStorage.getItem(SAVE_KEY);
+        return data ? JSON.parse(data) : null;
+    } catch (e) {
+        return null;
+    }
 }
 
 function createDefaultPlayer() {
@@ -31,7 +35,6 @@ function savePlayer(player) {
 function resetGame() {
     const player = createDefaultPlayer();
     savePlayer(player);
-
     location.reload();
 }
 
@@ -50,33 +53,29 @@ function renderHeader() {
 
         document.body.prepend(header);
 
-        document.getElementById("reset-game")
-            .addEventListener("click", resetGame);
+        const btn = document.getElementById("reset-game");
+        if (btn) btn.addEventListener("click", resetGame);
 
         return;
     }
 
     header.innerHTML = `
         <div class="hud">
-            <span class="hud-name">
-                👤 ${player.name}
-            </span>
-
-            <span class="hud-gold">
-                💰 ${player.gold}
-            </span>
-
-            <span class="hud-transport">
-                🐴 ${player.transport.name}
-            </span>
-
-            <span class="hud-weight">
-                ⚖ ${player.weight}/${player.transport.capacity}
-            </span>
+            <span>👤 ${player.name}</span>
+            <span>💰 ${player.gold}</span>
+            <span>🐴 ${player.transport.name}</span>
+            <span>⚖ ${player.weight}/${player.transport.capacity}</span>
         </div>
     `;
 
     document.body.prepend(header);
 }
 
-document.addEventListener("DOMContentLoaded", renderHeader);
+/* 🔥 ВАЖНО: гарантированный запуск */
+(function boot() {
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", renderHeader);
+    } else {
+        renderHeader();
+    }
+})();
