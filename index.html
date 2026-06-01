@@ -8,121 +8,74 @@
 
     <link rel="stylesheet" href="main.css">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet">
 
     <script src="index.js" defer></script>
 </head>
 <body>
 
-    <div id="game">
+<div id="game">
 
-        <header class="hero-panel">
+    <!-- ПЕРСОНАЖ -->
+    <header class="player-header">
 
-            <h1 class="game-title">
-                Хроники Торговца
-            </h1>
+        <div id="player-name">
+            Торговец
+        </div>
 
-            <div class="player-bar">
+        <div class="player-row">
+            <span id="player-gold">100 золотых</span>
+            <span id="player-transport">Осёл</span>
+        </div>
 
-                <div class="stat-card">
-                    <span class="stat-label">День</span>
-                    <span id="player-day">1</span>
-                </div>
+    </header>
 
-                <div class="stat-card">
-                    <span class="stat-label">Казна</span>
-                    <span id="player-gold">100 золотых</span>
-                </div>
+    <!-- ЛОКАЦИЯ -->
+    <section class="location-card">
 
-                <div class="stat-card">
-                    <span class="stat-label">Город</span>
-                    <span id="player-city">Ривервуд</span>
-                </div>
+        <h2 id="player-city">
+            Ривервуд
+        </h2>
 
-                <div class="stat-card">
-                    <span class="stat-label">Караван</span>
-                    <span id="player-transport">Осёл</span>
-                </div>
+        <p id="city-description">
+            Небольшой сельскохозяйственный город.
+        </p>
 
-                <div class="stat-card">
-                    <span class="stat-label">Груз</span>
-                    <span id="player-weight">0 / 100 кг</span>
-                </div>
+    </section>
 
-            </div>
+    <!-- КНОПКИ -->
+    <section class="actions">
 
-        </header>
+        <button id="market-button">
+            Рынок
+        </button>
 
-        <main class="world-layout">
+        <button id="stable-button">
+            Конюх
+        </button>
 
-            <section class="panel map-panel">
+        <button id="map-button">
+            Карта
+        </button>
 
-                <div class="panel-header">
-                    Карта Королевства
-                </div>
+    </section>
 
-                <div id="world-map">
+    <!-- КАРТА (скрыта по умолчанию) -->
+    <section id="map-screen" class="map-screen hidden">
 
-                    <!-- Города будут добавляться через index.js -->
+        <div class="map-header">
+            Карта королевства
+        </div>
 
-                </div>
+        <div id="world-map"></div>
 
-            </section>
+        <button id="close-map">
+            Закрыть карту
+        </button>
 
-            <section class="panel city-panel">
+    </section>
 
-                <div class="panel-header">
-                    Сведения о городе
-                </div>
-
-                <div id="city-info">
-
-                    <h2 id="city-name">
-                        Выберите город
-                    </h2>
-
-                    <p id="city-description">
-                        Нажмите на город на карте, чтобы увидеть сведения о нём.
-                    </p>
-
-                    <div class="city-actions">
-
-                        <button id="travel-button">
-                            Отправиться
-                        </button>
-
-                        <button id="market-button">
-                            Посетить рынок
-                        </button>
-
-                    </div>
-
-                </div>
-
-            </section>
-
-            <section class="panel log-panel">
-
-                <div class="panel-header">
-                    Хроника путешествий
-                </div>
-
-                <div id="game-log">
-
-                    <div class="log-entry">
-                        День 1. Ваше торговое приключение начинается.
-                    </div>
-
-                </div>
-
-            </section>
-
-        </main>
-
-    </div>
+</div>
 
 </body>
 </html>
