@@ -1,0 +1,214 @@
+{
+  "routes": [
+    {
+      "good": "Зерно",
+      "cheapCity": "Ривервуд",
+      "expensiveCity": "Имперская Столица",
+      "cheapModifier": 0.7,
+      "expensiveModifier": 1.4
+    },
+    {
+      "good": "Мука",
+      "cheapCity": "Ривервуд",
+      "expensiveCity": "Северный Порт",
+      "cheapModifier": 0.75,
+      "expensiveModifier": 1.35
+    },
+    {
+      "good": "Хлеб",
+      "cheapCity": "Ривервуд",
+      "expensiveCity": "Каменный Берег",
+      "cheapModifier": 0.8,
+      "expensiveModifier": 1.3
+    },
+    {
+      "good": "Рыба",
+      "cheapCity": "Северный Порт",
+      "expensiveCity": "Медный Пик",
+      "cheapModifier": 0.7,
+      "expensiveModifier": 1.5
+    },
+    {
+      "good": "Сушёная рыба",
+      "cheapCity": "Северный Порт",
+      "expensiveCity": "Золотые Холмы",
+      "cheapModifier": 0.75,
+      "expensiveModifier": 1.4
+    },
+    {
+      "good": "Мясо",
+      "cheapCity": "Ривервуд",
+      "expensiveCity": "Восточный Базар",
+      "cheapModifier": 0.8,
+      "expensiveModifier": 1.35
+    },
+    {
+      "good": "Соль",
+      "cheapCity": "Северный Порт",
+      "expensiveCity": "Лесоград",
+      "cheapModifier": 0.7,
+      "expensiveModifier": 1.4
+    },
+    {
+      "good": "Мёд",
+      "cheapCity": "Ривервуд",
+      "expensiveCity": "Имперская Столица",
+      "cheapModifier": 0.8,
+      "expensiveModifier": 1.35
+    },
+    {
+      "good": "Яблоки",
+      "cheapCity": "Ривервуд",
+      "expensiveCity": "Медный Пик",
+      "cheapModifier": 0.75,
+      "expensiveModifier": 1.4
+    },
+    {
+      "good": "Вино",
+      "cheapCity": "Северный Порт",
+      "expensiveCity": "Каменный Берег",
+      "cheapModifier": 0.8,
+      "expensiveModifier": 1.35
+    },
+    {
+      "good": "Ткань",
+      "cheapCity": "Лесоград",
+      "expensiveCity": "Имперская Столица",
+      "cheapModifier": 0.8,
+      "expensiveModifier": 1.4
+    },
+    {
+      "good": "Шерсть",
+      "cheapCity": "Лесоград",
+      "expensiveCity": "Восточный Базар",
+      "cheapModifier": 0.7,
+      "expensiveModifier": 1.4
+    },
+    {
+      "good": "Кожа",
+      "cheapCity": "Лесоград",
+      "expensiveCity": "Золотые Холмы",
+      "cheapModifier": 0.8,
+      "expensiveModifier": 1.35
+    },
+    {
+      "good": "Верёвка",
+      "cheapCity": "Лесоград",
+      "expensiveCity": "Северный Порт",
+      "cheapModifier": 0.75,
+      "expensiveModifier": 1.3
+    },
+    {
+      "good": "Свечи",
+      "cheapCity": "Золотые Холмы",
+      "expensiveCity": "Медный Пик",
+      "cheapModifier": 0.8,
+      "expensiveModifier": 1.3
+    },
+    {
+      "good": "Посуда",
+      "cheapCity": "Золотые Холмы",
+      "expensiveCity": "Ривервуд",
+      "cheapModifier": 0.75,
+      "expensiveModifier": 1.35
+    },
+    {
+      "good": "Стекло",
+      "cheapCity": "Золотые Холмы",
+      "expensiveCity": "Лесоград",
+      "cheapModifier": 0.7,
+      "expensiveModifier": 1.4
+    },
+    {
+      "good": "Бумага",
+      "cheapCity": "Золотые Холмы",
+      "expensiveCity": "Каменный Берег",
+      "cheapModifier": 0.75,
+      "expensiveModifier": 1.35
+    },
+    {
+      "good": "Книги",
+      "cheapCity": "Золотые Холмы",
+      "expensiveCity": "Восточный Базар",
+      "cheapModifier": 0.7,
+      "expensiveModifier": 1.5
+    },
+    {
+      "good": "Чернила",
+      "cheapCity": "Золотые Холмы",
+      "expensiveCity": "Ривервуд",
+      "cheapModifier": 0.8,
+      "expensiveModifier": 1.35
+    },
+    {
+      "good": "Древесина",
+      "cheapCity": "Лесоград",
+      "expensiveCity": "Северный Порт",
+      "cheapModifier": 0.7,
+      "expensiveModifier": 1.4
+    },
+    {
+      "good": "Уголь",
+      "cheapCity": "Каменный Берег",
+      "expensiveCity": "Восточный Базар",
+      "cheapModifier": 0.75,
+      "expensiveModifier": 1.35
+    },
+    {
+      "good": "Железная руда",
+      "cheapCity": "Каменный Берег",
+      "expensiveCity": "Имперская Столица",
+      "cheapModifier": 0.7,
+      "expensiveModifier": 1.4
+    },
+    {
+      "good": "Железо",
+      "cheapCity": "Каменный Берег",
+      "expensiveCity": "Восточный Базар",
+      "cheapModifier": 0.7,
+      "expensiveModifier": 1.5
+    },
+    {
+      "good": "Медь",
+      "cheapCity": "Медный Пик",
+      "expensiveCity": "Северный Порт",
+      "cheapModifier": 0.75,
+      "expensiveModifier": 1.35
+    },
+    {
+      "good": "Серебро",
+      "cheapCity": "Медный Пик",
+      "expensiveCity": "Имперская Столица",
+      "cheapModifier": 0.7,
+      "expensiveModifier": 1.5
+    },
+    {
+      "good": "Шёлк",
+      "cheapCity": "Восточный Базар",
+      "expensiveCity": "Имперская Столица",
+      "cheapModifier": 0.6,
+      "expensiveModifier": 1.6
+    },
+    {
+      "good": "Пряности",
+      "cheapCity": "Восточный Базар",
+      "expensiveCity": "Золотые Холмы",
+      "cheapModifier": 0.6,
+      "expensiveModifier": 1.5
+    },
+    {
+      "good": "Драгоценные камни",
+      "cheapCity": "Имперская Столица",
+      "expensiveCity": "Восточный Базар",
+      "cheapModifier": 0.8,
+      "expensiveModifier": 1.4
+    },
+    {
+      "good": "Благовония",
+      "cheapCity": "Восточный Базар",
+      "expensiveCity": "Ривервуд",
+      "cheapModifier": 0.7,
+      "expensiveModifier": 1.5
+    }
+  ]
+}
