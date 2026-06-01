@@ -7,54 +7,21 @@
     <title>Хроники Торговца</title>
 
     <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="header.css">
+    <link rel="stylesheet" href="log.css">
 
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet">
 
+    <script src="header.js" defer></script>
+    <script src="log.js" defer></script>
     <script src="index.js" defer></script>
 </head>
+
 <body>
 
 <div id="game">
 
-    <!-- СТАРЫЙ HEADER (оставили совместимость с JS) -->
-    <header class="hero-panel">
-
-        <h1 class="game-title">
-            Хроники Торговца
-        </h1>
-
-        <div class="player-bar">
-
-            <div class="stat-card">
-                <span class="stat-label">День</span>
-                <span id="player-day">1</span>
-            </div>
-
-            <div class="stat-card">
-                <span class="stat-label">Казна</span>
-                <span id="player-gold">100 золотых</span>
-            </div>
-
-            <div class="stat-card">
-                <span class="stat-label">Город</span>
-                <span id="player-city">Ривервуд</span>
-            </div>
-
-            <div class="stat-card">
-                <span class="stat-label">Транспорт</span>
-                <span id="player-transport">Осёл</span>
-            </div>
-
-            <div class="stat-card">
-                <span class="stat-label">Груз</span>
-                <span id="player-weight">0 / 100 кг</span>
-            </div>
-
-        </div>
-
-    </header>
-
-    <!-- ТЕКУЩАЯ ЛОКАЦИЯ -->
+    <!-- ЛОКАЦИЯ -->
     <section class="panel city-panel">
 
         <div class="panel-header">
@@ -63,9 +30,7 @@
 
         <div id="city-info">
 
-            <h2 id="player-city-name">
-                Ривервуд
-            </h2>
+            <h2 id="player-city-name">Ривервуд</h2>
 
             <p id="city-description">
                 Небольшой сельскохозяйственный город.
@@ -75,42 +40,12 @@
 
     </section>
 
-    <!-- КНОПКИ ДЕЙСТВИЙ -->
+    <!-- КНОПКИ -->
     <section class="actions-panel">
 
-        <button id="market-button">
-            Рынок
-        </button>
-
-        <button id="stable-button">
-            Конюх
-        </button>
-
-        <button id="map-button">
-            Карта
-        </button>
-
-    </section>
-
-    <!-- КАРТА (пока просто блок, JS его уже умеет заполнять) -->
-    <section class="panel map-panel">
-
-        <div class="panel-header">
-            Карта королевства
-        </div>
-
-        <div id="world-map"></div>
-
-    </section>
-
-    <!-- ЖУРНАЛ -->
-    <section class="panel log-panel">
-
-        <div class="panel-header">
-            Хроника
-        </div>
-
-        <div id="game-log"></div>
+        <button id="market-button">Рынок</button>
+        <button id="stable-button">Конюх</button>
+        <button id="map-button">Карта</button>
 
     </section>
 
