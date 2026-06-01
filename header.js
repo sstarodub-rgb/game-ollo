@@ -1,3 +1,5 @@
+alert("HEADER.JS ЗАГРУЖЕН");
+
 const SAVE_KEY = "merchantGame";
 
 function getPlayer() {
@@ -5,6 +7,7 @@ function getPlayer() {
         const data = localStorage.getItem(SAVE_KEY);
         return data ? JSON.parse(data) : null;
     } catch (e) {
+        alert("ОШИБКА LOCALSTORAGE");
         return null;
     }
 }
@@ -39,6 +42,8 @@ function resetGame() {
 }
 
 function renderHeader() {
+    alert("RENDER HEADER START");
+
     const player = getPlayer();
 
     const header = document.createElement("div");
@@ -54,8 +59,11 @@ function renderHeader() {
         document.body.prepend(header);
 
         const btn = document.getElementById("reset-game");
-        if (btn) btn.addEventListener("click", resetGame);
+        if (btn) {
+            btn.addEventListener("click", resetGame);
+        }
 
+        alert("NO PLAYER - RESET MODE");
         return;
     }
 
@@ -69,9 +77,11 @@ function renderHeader() {
     `;
 
     document.body.prepend(header);
+
+    alert("HEADER RENDERED");
 }
 
-/* 🔥 ВАЖНО: гарантированный запуск */
+/* безопасный запуск */
 (function boot() {
     if (document.readyState === "loading") {
         document.addEventListener("DOMContentLoaded", renderHeader);
