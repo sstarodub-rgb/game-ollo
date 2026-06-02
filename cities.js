@@ -105,3 +105,4 @@ const CITIES = [
     }
   }
 ];
+windows.CITIES = CITIES;
