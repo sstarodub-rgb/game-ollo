@@ -20,6 +20,14 @@ function savePlayer(player) {
 }
 
 /* -------------------------
+   CITY
+------------------------- */
+
+function getCity(cityId) {
+  return window.CITIES?.find(c => c.id === cityId);
+}
+
+/* -------------------------
    CREATE PLAYER
 ------------------------- */
 
@@ -40,10 +48,7 @@ function createPlayer() {
     },
 
     inventory: [],
-    stats: {
-      totalSpent: 0
-    },
-
+    stats: { totalSpent: 0 },
     log: [
       {
         text: "Персонаж создан",
@@ -58,91 +63,83 @@ function createPlayer() {
 }
 
 /* -------------------------
-   LOG
+   RENDER CITY
 ------------------------- */
-
-function addLog(player, text) {
-  player.log.push({
-    text,
-    cityId: player.cityId,
-    timestamp: Date.now()
-  });
-
-  savePlayer(player);
-}
-
-/* -------------------------
-   CITY
-------------------------- */
-
-function getCityById(cityId) {
-  if (!window.CITIES) return null;
-  return CITIES.find(c => c.id === cityId);
-}
 
 function renderCity(player) {
-  const city = getCityById(player.cityId);
-  if (!city) return;
+  const city = getCity(player.cityId);
+  const container = document.getElementById("city-container");
 
-  const iconEl = document.getElementById("city-icon");
-  const nameEl = document.getElementById("player-city-name");
-  const typeEl = document.getElementById("city-type");
+  if (!container || !city) return;
 
-  if (iconEl) iconEl.textContent = city.icon || "";
-  if (nameEl) nameEl.textContent = city.name || "";
-  if (typeEl) typeEl.textContent = city.type || "";
+  container.innerHTML = `
+    <section class="location-card">
+      <div class="location-icon">${city.icon}</div>
+      <div class="location-info">
+        <h2 class="city-name">${city.name}</h2>
+        <div class="city-type">${city.type}</div>
+      </div>
+    </section>
+  `;
 }
 
 /* -------------------------
-   LOG RENDER
+   RENDER BUTTONS + EVENTS
+------------------------- */
+
+function renderActions() {
+  const container = document.getElementById("actions-container");
+
+  if (!container) return;
+
+  container.innerHTML = `
+    <section class="actions-panel">
+      <button id="market-button">Рынок</button>
+      <button id="stable-button">Конюх</button>
+      <button id="map-button">Карта</button>
+    </section>
+  `;
+
+  document.getElementById("market-button").onclick = () => {
+    window.location.href = "./market.html";
+  };
+
+  document.getElementById("stable-button").onclick = () => {
+    window.location.href = "./stable.html";
+  };
+
+  document.getElementById("map-button").onclick = () => {
+    window.location.href = "./map.html";
+  };
+}
+
+/* -------------------------
+   RENDER LOG
 ------------------------- */
 
 function renderLog(player) {
-  const container = document.getElementById("log-list");
+  const container = document.getElementById("log-container");
+
   if (!container) return;
 
-  container.innerHTML = "";
+  container.innerHTML = `
+    <section class="log-panel">
+      <div class="log-title">Хроника путешествий</div>
+      <div id="log-list"></div>
+    </section>
+  `;
 
-  const lastLogs = player.log.slice(-20);
+  const list = container.querySelector("#log-list");
 
-  lastLogs.forEach(item => {
+  player.log.slice(-20).forEach(item => {
     const div = document.createElement("div");
-
     const time = new Date(item.timestamp).toLocaleTimeString();
 
     div.className = "log-item";
     div.textContent = `[${time}] ${item.text}`;
 
-    container.appendChild(div);
+    list.appendChild(div);
   });
-}
-
-/* -------------------------
-   BUTTONS
-------------------------- */
-
-function bindButtons() {
-  const marketBtn = document.getElementById("market-button");
-  const stableBtn = document.getElementById("stable-button");
-  const mapBtn = document.getElementById("map-button");
-
-  if (marketBtn) {
-    marketBtn.onclick = () => {
-      window.location.href = "./market.html";
-    };
-  }
-
-  if (stableBtn) {
-    stableBtn.onclick = () => {
-      window.location.href = "./stable.html";
-    };
-  }
-
-  if (mapBtn) {
-    mapBtn.onclick = () => {
-      window.location.href = "./map.html";
-    };
-  }
 }
 
 /* -------------------------
@@ -154,15 +151,11 @@ function renderCreateScreen() {
 
   game.innerHTML = `
     <div class="create-player-wrapper">
-      <button id="create-player-btn" class="create-player-btn">
-        Создать торговца
-      </button>
+      <button id="create-player-btn">Создать торговца</button>
     </div>
   `;
 
-  document
-    .getElementById("create-player-btn")
-    .addEventListener("click", createPlayer);
+  document.getElementById("create-player-btn").onclick = createPlayer;
 }
 
 /* -------------------------
@@ -178,8 +171,8 @@ function init() {
   }
 
   renderCity(player);
+  renderActions();
   renderLog(player);
-  bindButtons();
 }
 
 document.addEventListener("DOMContentLoaded", init);
