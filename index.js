@@ -25,10 +25,7 @@ function savePlayer(player) {
 
 function getCity(cityId) {
   const id = Number(cityId);
-
-  const city = window.CITIES?.find(c => c.id === id) || null;
-
-  return city;
+  return window.CITIES?.find(c => c.id === id) || null;
 }
 
 /* -------------------------
@@ -43,14 +40,12 @@ function createPlayer() {
     gold: 100,
     weight: 0,
     cityId: 1,
-
     transport: {
       id: 1,
       name: "Осёл",
       capacity: 100,
       speed: 1.0
     },
-
     inventory: [],
     stats: { totalSpent: 0 },
     log: [
@@ -67,7 +62,7 @@ function createPlayer() {
 }
 
 /* -------------------------
-   RENDER CITY
+   CITY RENDER
 ------------------------- */
 
 function renderCity(player) {
@@ -78,12 +73,12 @@ function renderCity(player) {
 
   container.innerHTML = `
     <section class="location-card city-card">
-      
-      <div class="location-icon">
-        ${city.icon}
-      </div>
 
-      <div class="location-info">
+      <div class="city-top">
+        <div class="location-icon">
+          ${city.icon}
+        </div>
+
         <h2 class="city-name">
           ${city.name}
         </h2>
@@ -91,10 +86,12 @@ function renderCity(player) {
         <div class="city-type">
           ${city.type}
         </div>
+      </div>
 
-        <div class="city-description">
-          ${city.description}
-        </div>
+      <div class="city-divider"></div>
+
+      <div class="city-description">
+        ${city.description}
       </div>
 
       <div class="city-coordinates">
@@ -106,7 +103,7 @@ function renderCity(player) {
 }
 
 /* -------------------------
-   RENDER BUTTONS
+   ACTIONS
 ------------------------- */
 
 function renderActions() {
@@ -136,7 +133,7 @@ function renderActions() {
 }
 
 /* -------------------------
-   RENDER LOG
+   LOG
 ------------------------- */
 
 function renderLog(player) {
