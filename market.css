@@ -1,0 +1,159 @@
+#market-page {
+  padding: 12px;
+}
+
+.market-city-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  padding: 14px;
+
+  background: linear-gradient(
+    to bottom,
+    var(--panel-bg-top),
+    var(--panel-bg-bottom)
+  );
+
+  border: 1px solid var(--panel-border);
+  border-radius: 12px;
+}
+
+.market-city-icon {
+  font-size: 36px;
+}
+
+.market-city-name {
+  font-family: var(--font-title);
+  font-size: 24px;
+  color: var(--gold);
+}
+
+.market-subtitle {
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.market-filters {
+  display: flex;
+  gap: 8px;
+
+  margin-top: 12px;
+  padding-bottom: 4px;
+
+  overflow-x: auto;
+}
+
+.market-filter-btn {
+  flex-shrink: 0;
+
+  padding: 8px 14px;
+
+  border: 1px solid var(--gold);
+  border-radius: 999px;
+
+  background: var(--button-bottom);
+
+  color: var(--gold-light);
+
+  font-family: var(--font-title);
+}
+
+.market-list {
+  margin-top: 12px;
+
+  background: linear-gradient(
+    to bottom,
+    var(--panel-bg-top),
+    var(--panel-bg-bottom)
+  );
+
+  border: 1px solid var(--panel-border);
+  border-radius: 12px;
+
+  overflow: hidden;
+}
+
+.market-header,
+.market-row {
+  display: grid;
+  grid-template-columns: 1.8fr 1fr 1fr;
+
+  align-items: center;
+
+  padding: 10px 12px;
+}
+
+.market-header {
+  border-bottom: 1px solid var(--panel-border);
+
+  font-family: var(--font-title);
+  color: var(--gold);
+}
+
+.market-row {
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.market-price-btn {
+  border: none;
+  background: transparent;
+
+  color: var(--gold-light);
+
+  font-size: 18px;
+  font-family: var(--font-text);
+}
+
+.market-modal {
+  position: fixed;
+  inset: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: rgba(0,0,0,0.7);
+
+  padding: 20px;
+}
+
+.hidden {
+  display: none;
+}
+
+.market-modal-content {
+  width: 100%;
+
+  padding: 16px;
+
+  background: var(--bg-main);
+
+  border: 1px solid var(--gold);
+  border-radius: 12px;
+}
+
+.market-quantity {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+
+  margin: 16px 0;
+}
+
+.market-quantity button {
+  width: 40px;
+  height: 40px;
+}
+
+.market-modal-actions {
+  display: flex;
+  gap: 10px;
+
+  margin-top: 16px;
+}
+
+.market-modal-actions button {
+  flex: 1;
+}
