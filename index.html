@@ -17,55 +17,53 @@
 
     <div id="game">
 
+      <!-- 🧭 ЛОКАЦИЯ -->
       <section id="location-section" class="location-card">
 
-        <div id="city-icon" class="location-icon">
-          🏡
-        </div>
+        <div id="city-icon" class="location-icon">🏡</div>
 
         <div class="location-info">
 
           <h2 id="player-city-name" class="city-name">
-            <span class="city-first-letter">Р</span>ивервуд
+            <span class="city-first-letter">—</span> —
           </h2>
 
           <div id="city-type" class="city-type">
-            сельская деревня
+            —
           </div>
 
         </div>
 
       </section>
 
+      <!-- 🎮 ДЕЙСТВИЯ -->
       <section id="actions-section" class="actions-panel">
 
-        <button id="market-button">
-          Рынок
-        </button>
-
-        <button id="stable-button">
-          Конюх
-        </button>
-
-        <button id="map-button">
-          Карта
-        </button>
+        <button id="market-button">Рынок</button>
+        <button id="stable-button">Конюх</button>
+        <button id="map-button">Карта</button>
 
       </section>
 
+      <!-- 📜 ЛОГ -->
       <section id="log-section" class="log-panel">
 
         <div class="log-title">
           Хроника путешествий
         </div>
 
-        <div id="log-list">
-        </div>
+        <div id="log-list"></div>
 
       </section>
 
     </div>
 
+    <!-- 📦 DATA (ВАЖНО) -->
+    <script src="./cities.js?v=1"></script>
+    <script src="./goods.js?v=1"></script>
+    <script src="./transport.js?v=1"></script>
+
+    <!-- 🧠 CORE -->
     <script src="./header.js?v=1"></script>
     <script src="./log.js?v=1"></script>
     <script src="./index.js?v=1"></script>
