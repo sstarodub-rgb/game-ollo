@@ -1,43 +1,91 @@
-#stable-page {
-  padding: 16px;
-  font-family: "Cinzel", serif;
+body {
+  margin: 0;
+  font-family: serif;
+  background: #1c1a17;
   color: #f5e6c8;
-  background: #1b140e;
-  min-height: 100vh;
 }
 
-/* HEADER */
+/* HEADER (как у тебя общий стиль) */
+#game-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+
+  padding: 8px 10px;
+
+  background: linear-gradient(
+    to bottom,
+    var(--panel-bg-top),
+    var(--panel-bg-bottom)
+  );
+
+  border-bottom: 1px solid var(--panel-border);
+}
+
 .stable-header {
-  padding: 12px;
-  border-bottom: 2px solid #c89b3c;
-  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .stable-title {
-  font-size: 22px;
-  color: #c89b3c;
+  font-family: var(--font-title);
+  font-size: 18px;
+  color: var(--gold-light);
 }
 
-.stable-subtitle {
-  font-size: 12px;
-  opacity: 0.7;
+/* BACK BUTTON */
+.header-back-btn {
+  padding: 8px 12px;
+
+  border: 1px solid var(--gold);
+  border-radius: 8px;
+
+  background: linear-gradient(
+    to bottom,
+    var(--button-top),
+    var(--button-bottom)
+  );
+
+  color: var(--gold-light);
+
+  font-family: var(--font-title);
+  cursor: pointer;
 }
 
-/* CARD */
-.stable-card {
-  padding: 14px;
-  border: 1px solid rgba(200,155,60,0.3);
-  border-radius: 12px;
-  background: rgba(0,0,0,0.2);
+/* CONTENT */
+#stable {
+  padding: 10px;
 }
 
-#test-btn {
-  margin-top: 12px;
-  padding: 10px 14px;
+#transport-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.transport-card {
+  border: 1px solid var(--gold);
+  border-radius: 10px;
+  padding: 10px;
+
+  background: rgba(255,255,255,0.03);
+}
+
+.transport-card h3 {
+  margin: 0;
+  color: var(--gold);
+}
+
+.transport-card button {
+  margin-top: 8px;
+  padding: 6px 10px;
+
+  border: 1px solid var(--gold);
+  border-radius: 8px;
 
   background: transparent;
-  border: 1px solid #c89b3c;
-  color: #f5e6c8;
+  color: var(--text-main);
 
-  border-radius: 10px;
+  cursor: pointer;
 }
