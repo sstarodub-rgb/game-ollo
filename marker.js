@@ -8,41 +8,44 @@ let selectedCategory = "Все";
 let categories = ["Все"];
 
 async function loadData() {
+  console.log("INIT MARKET");
+
   const playerData = localStorage.getItem("merchantGame");
 
   if (!playerData) {
-    window.location.href = "./index.html";
+    console.error("NO PLAYER");
     return;
   }
 
   player = JSON.parse(playerData);
+  console.log("PLAYER:", player);
 
   try {
-    const [goodsRes, citiesRes] = await Promise.all([
-      fetch("./goods.json?v=" + Date.now()),
-      fetch("./cities.json?v=" + Date.now())
-    ]);
+    const goodsRes = await fetch("./goods.json");
+    const citiesRes = await fetch("./cities.json");
+
+    console.log("GOODS STATUS:", goodsRes.status);
+    console.log("CITIES STATUS:", citiesRes.status);
+
+    if (!goodsRes.ok || !citiesRes.ok) {
+      console.error("JSON FILES NOT FOUND");
+      return;
+    }
 
     goods = await goodsRes.json();
     cities = await citiesRes.json();
 
-    console.log("GOODS:", goods.length);
-    console.log("CITIES:", cities.length);
-    console.log("PLAYER:", player);
-
-    // 🔥 FIX: важно == а не ===
-    city = cities.find(c => c.id == player.cityId);
-
-    console.log("FOUND CITY:", city);
+    console.log("GOODS LOADED:", goods.length);
+    console.log("CITIES LOADED:", cities.length);
 
   } catch (e) {
-    console.error("LOAD ERROR:", e);
+    console.error("FETCH ERROR:", e);
     return;
   }
 
-  marketModifier = JSON.parse(
-    localStorage.getItem("marketModifier") || "{}"
-  );
+  city = cities.find(c => c.id == player.cityId);
+
+  console.log("FOUND CITY:", city);
 
   if (!city) {
     console.error("CITY NOT FOUND");
@@ -50,9 +53,12 @@ async function loadData() {
   }
 
   if (!city.market) {
-    console.error("CITY HAS NO MARKET DATA");
+    console.error("NO MARKET IN CITY");
     return;
   }
+
+  marketModifier =
+    JSON.parse(localStorage.getItem("marketModifier")) || {};
 
   buildCategories();
   renderCity();
@@ -67,30 +73,22 @@ function buildCategories() {
     if (g.categoryName) set.add(g.categoryName);
   });
 
-  categories = ["Все", ...Array.from(set)];
+  categories = ["Все", ...set];
 }
 
 function renderCity() {
-  const nameEl = document.getElementById("market-city-name");
-  const iconEl = document.getElementById("market-city-icon");
-
-  if (!nameEl || !iconEl) return;
-
-  nameEl.textContent = city.name;
-  iconEl.textContent = city.icon;
+  document.getElementById("market-city-name").textContent = city.name;
+  document.getElementById("market-city-icon").textContent = city.icon;
 }
 
 function renderFilters() {
-  const container = document.getElementById("market-filters");
-
-  if (!container) return;
-
-  container.innerHTML = "";
+  const el = document.getElementById("market-filters");
+  el.innerHTML = "";
 
   categories.forEach(cat => {
     const btn = document.createElement("button");
-    btn.className = "market-filter-btn";
     btn.textContent = cat;
+    btn.className = "market-filter-btn";
 
     if (cat === selectedCategory) {
       btn.classList.add("active");
@@ -102,36 +100,34 @@ function renderFilters() {
       renderGoods();
     };
 
-    container.appendChild(btn);
+    el.appendChild(btn);
   });
 }
 
-function getModifier(id) {
+function modifier(id) {
   return marketModifier[id] || 1;
 }
 
-function getBuyPrice(g) {
-  return Math.round(g.basePrice * getModifier(g.id));
+function buyPrice(g) {
+  return Math.round(g.basePrice * modifier(g.id));
 }
 
-function getSellPrice(g) {
-  return Math.round(g.basePrice * getModifier(g.id) * 0.8);
+function sellPrice(g) {
+  return Math.round(g.basePrice * modifier(g.id) * 0.8);
 }
 
 function canBuy(id) {
-  return city?.market?.buy?.includes(id);
+  return city.market.buy.includes(id);
 }
 
 function canSell(id) {
-  return city?.market?.sell?.includes(id);
+  return city.market.sell.includes(id);
 }
 
 function renderGoods() {
-  const container = document.getElementById("market-list");
+  const el = document.getElementById("market-list");
 
-  if (!container) return;
-
-  container.innerHTML = `
+  el.innerHTML = `
     <div class="market-header">
       <div>Товар</div>
       <div>Продажа</div>
@@ -139,42 +135,25 @@ function renderGoods() {
     </div>
   `;
 
+  console.log("RENDER GOODS");
+
   goods
-    .filter(g => selectedCategory === "Все" || g.categoryName === selectedCategory)
+    .filter(g =>
+      selectedCategory === "Все" ||
+      g.categoryName === selectedCategory
+    )
     .forEach(g => {
       const row = document.createElement("div");
       row.className = "market-row";
 
-      const sellBtn = canSell(g.id)
-        ? `<button class="market-price-btn" data-id="${g.id}" data-type="sell">
-            ${getSellPrice(g)}
-           </button>`
-        : "—";
-
-      const buyBtn = canBuy(g.id)
-        ? `<button class="market-price-btn" data-id="${g.id}" data-type="buy">
-            ${getBuyPrice(g)}
-           </button>`
-        : "—";
-
       row.innerHTML = `
         <div>${g.icon} ${g.name}</div>
-        <div>${sellBtn}</div>
-        <div>${buyBtn}</div>
+        <div>${canSell(g.id) ? sellPrice(g) : "—"}</div>
+        <div>${canBuy(g.id) ? buyPrice(g) : "—"}</div>
       `;
 
-      container.appendChild(row);
+      el.appendChild(row);
     });
-
-  bindButtons();
-}
-
-function bindButtons() {
-  document.querySelectorAll(".market-price-btn").forEach(btn => {
-    btn.onclick = () => {
-      console.log("CLICK:", btn.dataset);
-    };
-  });
 }
 
 loadData();
