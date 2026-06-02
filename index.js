@@ -72,25 +72,25 @@ function addLog(player, text) {
 }
 
 /* -------------------------
-   CITY RENDER
+   CITY
 ------------------------- */
 
-function getCity(player) {
+function getCityById(cityId) {
   if (!window.CITIES) return null;
-  return CITIES.find(c => c.id === player.cityId);
+  return CITIES.find(c => c.id === cityId);
 }
 
 function renderCity(player) {
-  const city = getCity(player);
+  const city = getCityById(player.cityId);
   if (!city) return;
 
-  const icon = document.getElementById("city-icon");
-  const name = document.getElementById("player-city-name");
-  const type = document.getElementById("city-type");
+  const iconEl = document.getElementById("city-icon");
+  const nameEl = document.getElementById("player-city-name");
+  const typeEl = document.getElementById("city-type");
 
-  if (icon) icon.textContent = city.icon;
-  if (name) name.textContent = city.name;
-  if (type) type.textContent = city.type;
+  if (iconEl) iconEl.textContent = city.icon || "";
+  if (nameEl) nameEl.textContent = city.name || "";
+  if (typeEl) typeEl.textContent = city.type || "";
 }
 
 /* -------------------------
@@ -103,7 +103,9 @@ function renderLog(player) {
 
   container.innerHTML = "";
 
-  player.log.slice(-20).forEach(item => {
+  const lastLogs = player.log.slice(-20);
+
+  lastLogs.forEach(item => {
     const div = document.createElement("div");
 
     const time = new Date(item.timestamp).toLocaleTimeString();
@@ -119,25 +121,25 @@ function renderLog(player) {
    BUTTONS
 ------------------------- */
 
-function bindButtons(player) {
-  const market = document.getElementById("market-button");
-  const stable = document.getElementById("stable-button");
-  const map = document.getElementById("map-button");
+function bindButtons() {
+  const marketBtn = document.getElementById("market-button");
+  const stableBtn = document.getElementById("stable-button");
+  const mapBtn = document.getElementById("map-button");
 
-  if (market) {
-    market.onclick = () => {
+  if (marketBtn) {
+    marketBtn.onclick = () => {
       window.location.href = "./market.html";
     };
   }
 
-  if (stable) {
-    stable.onclick = () => {
+  if (stableBtn) {
+    stableBtn.onclick = () => {
       window.location.href = "./stable.html";
     };
   }
 
-  if (map) {
-    map.onclick = () => {
+  if (mapBtn) {
+    mapBtn.onclick = () => {
       window.location.href = "./map.html";
     };
   }
@@ -177,7 +179,7 @@ function init() {
 
   renderCity(player);
   renderLog(player);
-  bindButtons(player);
+  bindButtons();
 }
 
 document.addEventListener("DOMContentLoaded", init);
