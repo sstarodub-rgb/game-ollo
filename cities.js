@@ -1,9 +1,10 @@
 alert("Cities loaded");
+
 const CITIES = [
   {
     id: 1,
     name: "Ривервуд",
-    type: "village",
+    type: "деревня",
     icon: "🏡",
     x: 500,
     y: 100,
@@ -16,7 +17,7 @@ const CITIES = [
   {
     id: 2,
     name: "Оукхолл",
-    type: "town",
+    type: "городок",
     icon: "🏘️",
     x: 783,
     y: 217,
@@ -29,7 +30,7 @@ const CITIES = [
   {
     id: 3,
     name: "Стоунгейт",
-    type: "city",
+    type: "город",
     icon: "🏰",
     x: 900,
     y: 500,
@@ -42,7 +43,7 @@ const CITIES = [
   {
     id: 4,
     name: "Голдпорт",
-    type: "port",
+    type: "порт",
     icon: "⚓",
     x: 783,
     y: 783,
@@ -55,7 +56,7 @@ const CITIES = [
   {
     id: 5,
     name: "Санкрест",
-    type: "capital",
+    type: "столица",
     icon: "👑",
     x: 500,
     y: 900,
@@ -68,7 +69,7 @@ const CITIES = [
   {
     id: 6,
     name: "Айронпик",
-    type: "fortress",
+    type: "крепость",
     icon: "⛰️",
     x: 217,
     y: 783,
@@ -81,7 +82,7 @@ const CITIES = [
   {
     id: 7,
     name: "Мирфилд",
-    type: "town",
+    type: "городок",
     icon: "🏘️",
     x: 100,
     y: 500,
@@ -94,7 +95,7 @@ const CITIES = [
   {
     id: 8,
     name: "Дастмир",
-    type: "oasis",
+    type: "оазис",
     icon: "🌴",
     x: 217,
     y: 217,
@@ -105,4 +106,5 @@ const CITIES = [
     }
   }
 ];
+
 window.CITIES = CITIES;
