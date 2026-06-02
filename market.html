@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Рынок</title>
+
+    <link rel="stylesheet" href="./main.css?v=1">
+    <link rel="stylesheet" href="./header.css?v=1">
+    <link rel="stylesheet" href="./market.css?v=1">
+
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
+  </head>
+
+  <body>
+
+    <div id="market-page">
+
+      <section id="market-city-card" class="market-city-card">
+        <div id="market-city-icon" class="market-city-icon">🏡</div>
+
+        <div>
+          <div id="market-city-name" class="market-city-name">
+            Ривервуд
+          </div>
+
+          <div class="market-subtitle">
+            Рынок
+          </div>
+        </div>
+      </section>
+
+      <section id="market-filters" class="market-filters">
+      </section>
+
+      <section id="market-list" class="market-list">
+      </section>
+
+    </div>
+
+    <div id="market-modal" class="market-modal hidden">
+      <div class="market-modal-content">
+
+        <h2 id="modal-title">
+          Сделка
+        </h2>
+
+        <div id="modal-price"></div>
+
+        <div class="market-quantity">
+
+          <button id="qty-minus">−</button>
+
+          <span id="qty-value">1</span>
+
+          <button id="qty-plus">+</button>
+
+        </div>
+
+        <div id="modal-total"></div>
+
+        <div class="market-modal-actions">
+
+          <button id="modal-cancel">
+            Отмена
+          </button>
+
+          <button id="modal-confirm">
+            Подтвердить
+          </button>
+
+        </div>
+
+      </div>
+    </div>
+
+    <script src="./header.js?v=1"></script>
+    <script src="./market.js?v=1"></script>
+
+  </body>
+</html>
