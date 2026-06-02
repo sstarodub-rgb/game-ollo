@@ -24,8 +24,11 @@ function savePlayer(player) {
 ------------------------- */
 
 function getCity(cityId) {
-  alert("город: " +window.CITIES?.find(c => c.id === cityId));
-  return window.CITIES?.find(c => c.id === cityId);
+  const id = Number(cityId);
+
+  const city = window.CITIES?.find(c => c.id === id) || null;
+
+  return city;
 }
 
 /* -------------------------
@@ -74,18 +77,36 @@ function renderCity(player) {
   if (!container || !city) return;
 
   container.innerHTML = `
-    <section class="location-card">
-      <div class="location-icon">${city.icon}</div>
-      <div class="location-info">
-        <h2 class="city-name">${city.name}</h2>
-        <div class="city-type">${city.type}</div>
+    <section class="location-card city-card">
+      
+      <div class="location-icon">
+        ${city.icon}
       </div>
+
+      <div class="location-info">
+        <h2 class="city-name">
+          ${city.name}
+        </h2>
+
+        <div class="city-type">
+          ${city.type}
+        </div>
+
+        <div class="city-description">
+          ${city.description}
+        </div>
+      </div>
+
+      <div class="city-coordinates">
+        x: ${city.x} / y: ${city.y}
+      </div>
+
     </section>
   `;
 }
 
 /* -------------------------
-   RENDER BUTTONS + EVENTS
+   RENDER BUTTONS
 ------------------------- */
 
 function renderActions() {
@@ -176,6 +197,6 @@ function init() {
   renderLog(player);
 }
 
-document.addEventListener("DOMContentLoaded", init);
+init();
 
 alert("index.js END");
