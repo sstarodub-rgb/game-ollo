@@ -5,16 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Рынок — Хроники Торговца</title>
 
-    <link rel="stylesheet" href="./main.css?v=3">
+    <link rel="stylesheet" href="./main.css?v=4">
     <link rel="stylesheet" href="./header.css?v=1">
-    <link rel="stylesheet" href="./market.css?v=3">
+    <link rel="stylesheet" href="./market.css?v=4">
 
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
     <header id="game-header">
-        <div class="stable-header">   <!-- стиль как в stable.html -->
+        <div class="stable-header">
             <button id="back-to-city-btn" class="header-back-btn">
                 ← Назад в город
             </button>
@@ -47,15 +47,13 @@
             <table id="market-table" class="market-table">
                 <thead>
                     <tr>
-                        <th></th> <!-- иконка -->
+                        <th></th>
                         <th>Товар</th>
                         <th class="text-center">Купить</th>
                         <th class="text-center">Продать</th>
                     </tr>
                 </thead>
-                <tbody id="market-tbody">
-                    <!-- Заполняется JS -->
-                </tbody>
+                <tbody id="market-tbody"></tbody>
             </table>
         </section>
 
@@ -88,6 +86,6 @@
     </div>
 
     <script src="./header.js"></script>
-    <script src="./market.js"></script>
+    <script src="./market.js?v=4"></script>
 </body>
 </html>
