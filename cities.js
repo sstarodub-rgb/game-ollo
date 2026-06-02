@@ -1,4 +1,4 @@
-alert("Cities loaded")
+alert("Cities loaded");
 const CITIES = [
   {
     id: 1,
