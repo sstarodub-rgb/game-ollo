@@ -1,40 +1,35 @@
 <!DOCTYPE html>
 <html lang="ru">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Конюх</title>
+  <title>Конюшня</title>
 
-    <link rel="stylesheet" href="./main.css?v=1">
-    <link rel="stylesheet" href="./stable.css?v=1">
-  </head>
+  <link rel="stylesheet" href="./main.css">
+  <link rel="stylesheet" href="./stable.css">
+</head>
 
-  <body>
+<body>
 
-    <div id="stable-page">
+  <header id="game-header">
+    <div class="stable-header">
+      <button id="back-to-city-btn" class="header-back-btn">
+        ← Назад в город
+      </button>
 
-      <header class="stable-header">
-        <div class="stable-title">🐴 Конюх</div>
-        <div class="stable-subtitle">Уход за транспортом и животными</div>
-      </header>
-
-      <section class="stable-card">
-
-        <p>
-          Здесь можно улучшать, менять и обслуживать транспорт.
-        </p>
-
-        <div id="transport-list"></div>
-
-        <button id="test-btn">
-          Проверка конюха
-        </button>
-
-      </section>
-
+      <div class="stable-title">
+        Конюшня
+      </div>
     </div>
+  </header>
 
-    <script src="./stable.js?v=1"></script>
-  </body>
+  <main id="stable">
+    <div id="transport-list"></div>
+  </main>
+
+  <script src="./transport.js"></script>
+  <script src="./stable.js"></script>
+
+</body>
 </html>
