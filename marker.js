@@ -28,11 +28,8 @@ async function loadData() {
 
     city = cities.find(c => c.id === player.cityId);
 
-    console.log("CITY:", city);
-    console.log("GOODS:", goods.length);
-
   } catch (e) {
-    console.error("LOAD ERROR:", e);
+    console.error(e);
     return;
   }
 
@@ -40,10 +37,7 @@ async function loadData() {
     localStorage.getItem("marketModifier") || "{}"
   );
 
-  if (!city || !city.market) {
-    console.error("NO CITY MARKET DATA");
-    return;
-  }
+  if (!city || !city.market) return;
 
   buildCategories();
   renderCity();
@@ -67,13 +61,11 @@ function renderCity() {
 }
 
 function renderFilters() {
-  const container = document.getElementById("market-filters");
-
-  container.innerHTML = "";
+  const el = document.getElementById("market-filters");
+  el.innerHTML = "";
 
   categories.forEach(cat => {
     const btn = document.createElement("button");
-
     btn.className = "market-filter-btn";
     btn.textContent = cat;
 
@@ -87,20 +79,20 @@ function renderFilters() {
       renderGoods();
     };
 
-    container.appendChild(btn);
+    el.appendChild(btn);
   });
 }
 
-function getModifier(id) {
+function modifier(id) {
   return marketModifier[id] || 1;
 }
 
-function getBuyPrice(g) {
-  return Math.round(g.basePrice * getModifier(g.id));
+function buyPrice(g) {
+  return Math.round(g.basePrice * modifier(g.id));
 }
 
-function getSellPrice(g) {
-  return Math.round(g.basePrice * getModifier(g.id) * 0.8);
+function sellPrice(g) {
+  return Math.round(g.basePrice * modifier(g.id) * 0.8);
 }
 
 function canBuy(id) {
@@ -112,9 +104,9 @@ function canSell(id) {
 }
 
 function renderGoods() {
-  const container = document.getElementById("market-list");
+  const el = document.getElementById("market-list");
 
-  container.innerHTML = `
+  el.innerHTML = `
     <div class="market-header">
       <div>Товар</div>
       <div>Продажа</div>
@@ -130,30 +122,12 @@ function renderGoods() {
 
       row.innerHTML = `
         <div>${g.icon} ${g.name}</div>
-        <div>
-          ${canSell(g.id)
-            ? `<button class="market-price-btn" data-id="${g.id}" data-type="sell">${getSellPrice(g)}</button>`
-            : "—"}
-        </div>
-        <div>
-          ${canBuy(g.id)
-            ? `<button class="market-price-btn" data-id="${g.id}" data-type="buy">${getBuyPrice(g)}</button>`
-            : "—"}
-        </div>
+        <div>${canSell(g.id) ? `<button class="market-price-btn">${sellPrice(g)}</button>` : "—"}</div>
+        <div>${canBuy(g.id) ? `<button class="market-price-btn">${buyPrice(g)}</button>` : "—"}</div>
       `;
 
-      container.appendChild(row);
+      el.appendChild(row);
     });
-
-  bindButtons();
-}
-
-function bindButtons() {
-  document.querySelectorAll(".market-price-btn").forEach(btn => {
-    btn.onclick = () => {
-      console.log("CLICK:", btn.dataset);
-    };
-  });
 }
 
 loadData();
