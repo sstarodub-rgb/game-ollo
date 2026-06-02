@@ -41,3 +41,4 @@ const TRANSPORTS = [
     description: "Мечта любого купца. Огромная грузоподъёмность и престиж."
   }
 ];
+windows.TRANSPORTS = TRANSPORTS;
