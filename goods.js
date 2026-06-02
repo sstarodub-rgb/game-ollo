@@ -274,3 +274,4 @@ const GOODS = [
     icon: "🪔"
   }
 ];
+windows.GOODS = GOODS;
