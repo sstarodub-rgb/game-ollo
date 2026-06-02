@@ -1,4 +1,5 @@
 const PLAYER_KEY = "merchantGame";
+const LOG_KEY = "merchantLog";
 
 function getPlayer() {
   try {
@@ -9,14 +10,12 @@ function getPlayer() {
   }
 }
 
+function savePlayer(player) {
+  localStorage.setItem(PLAYER_KEY, JSON.stringify(player));
+}
+
 function createPlayer() {
-  const names = [
-    "Эйрик",
-    "Торвин",
-    "Гарет",
-    "Мирон",
-    "Лорик"
-  ];
+  const names = ["Эйрик", "Торвин", "Гарет", "Мирон", "Лорик"];
 
   const player = {
     name: names[Math.floor(Math.random() * names.length)],
@@ -24,21 +23,18 @@ function createPlayer() {
     weight: 0,
     cityId: 1,
     transport: {
+      id: 1,
       name: "Осёл",
-      capacity: 100
+      capacity: 100,
+      speed: 1.0
     }
   };
 
-  localStorage.setItem(
-    "merchantGame",
-    JSON.stringify(player)
-  );
+  savePlayer(player);
 
   localStorage.setItem(
-    "merchantLog",
-    JSON.stringify([
-      "Персонаж создан"
-    ])
+    LOG_KEY,
+    JSON.stringify(["Персонаж создан"])
   );
 
   location.reload();
@@ -84,6 +80,14 @@ function bindButtons() {
   }
 }
 
+function renderUI(player) {
+  // ничего не ломаем — только кнопки биндим
+  bindButtons();
+
+  // будущая точка расширения:
+  // можно сюда добавлять отображение города через CITIES[player.cityId]
+}
+
 function initPage() {
   const player = getPlayer();
 
@@ -92,7 +96,18 @@ function initPage() {
     return;
   }
 
-  bindButtons();
+  // защита от битого объекта
+  if (!player.transport) {
+    player.transport = {
+      id: 1,
+      name: "Осёл",
+      capacity: 100,
+      speed: 1.0
+    };
+    savePlayer(player);
+  }
+
+  renderUI(player);
 }
 
 initPage();
