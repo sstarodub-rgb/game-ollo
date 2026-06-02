@@ -2,46 +2,44 @@
   padding: 12px;
 }
 
+/* CITY CARD (как header стиль) */
 .market-city-card {
   display: flex;
   align-items: center;
   gap: 12px;
 
-  padding: 14px;
+  padding: 10px 14px;
 
-  background: linear-gradient(
-    to bottom,
-    var(--panel-bg-top),
-    var(--panel-bg-bottom)
-  );
+  background: linear-gradient(to right, #2b1f14, #3a2a1b);
+  border-bottom: 2px solid #c89b3c;
 
-  border: 1px solid var(--panel-border);
-  border-radius: 12px;
+  border-radius: 10px;
 }
 
 .market-city-icon {
-  font-size: 36px;
+  font-size: 28px;
 }
 
 .market-city-name {
-  font-family: var(--font-title);
-  font-size: 24px;
-  color: var(--gold);
+  font-family: "Cinzel", serif;
+  font-size: 20px;
+  color: #c89b3c;
 }
 
 .market-subtitle {
-  color: var(--text-muted);
-  font-style: italic;
+  font-size: 12px;
+  color: #f5e6c8;
+  opacity: 0.7;
 }
 
+/* FILTERS */
 .market-filters {
   display: flex;
   gap: 8px;
+  overflow-x: auto;
 
   margin-top: 12px;
-  padding-bottom: 4px;
-
-  overflow-x: auto;
+  padding-bottom: 6px;
 }
 
 .market-filter-btn {
@@ -49,26 +47,25 @@
 
   padding: 8px 14px;
 
-  border: 1px solid var(--gold);
+  border: 1px solid #c89b3c;
   border-radius: 999px;
 
-  background: var(--button-bottom);
+  background: transparent;
+  color: #f5e6c8;
 
-  color: var(--gold-light);
-
-  font-family: var(--font-title);
+  font-family: "Cinzel", serif;
 }
 
+.market-filter-btn.active {
+  color: #c89b3c;
+  border-color: #c89b3c;
+}
+
+/* LIST */
 .market-list {
   margin-top: 12px;
 
-  background: linear-gradient(
-    to bottom,
-    var(--panel-bg-top),
-    var(--panel-bg-bottom)
-  );
-
-  border: 1px solid var(--panel-border);
+  border: 1px solid #c89b3c33;
   border-radius: 12px;
 
   overflow: hidden;
@@ -77,34 +74,32 @@
 .market-header,
 .market-row {
   display: grid;
-  grid-template-columns: 1.8fr 1fr 1fr;
-
-  align-items: center;
+  grid-template-columns: 2fr 1fr 1fr;
 
   padding: 10px 12px;
+  align-items: center;
 }
 
 .market-header {
-  border-bottom: 1px solid var(--panel-border);
+  font-family: "Cinzel", serif;
+  color: #c89b3c;
 
-  font-family: var(--font-title);
-  color: var(--gold);
+  border-bottom: 1px solid #c89b3c33;
 }
 
 .market-row {
   border-bottom: 1px solid rgba(255,255,255,0.05);
+  color: #f5e6c8;
 }
 
 .market-price-btn {
-  border: none;
   background: transparent;
-
-  color: var(--gold-light);
-
-  font-size: 18px;
-  font-family: var(--font-text);
+  border: none;
+  color: #c89b3c;
+  font-size: 16px;
 }
 
+/* MODAL */
 .market-modal {
   position: fixed;
   inset: 0;
@@ -114,7 +109,6 @@
   align-items: center;
 
   background: rgba(0,0,0,0.7);
-
   padding: 20px;
 }
 
@@ -124,12 +118,11 @@
 
 .market-modal-content {
   width: 100%;
-
   padding: 16px;
 
-  background: var(--bg-main);
+  background: #1b140e;
 
-  border: 1px solid var(--gold);
+  border: 1px solid #c89b3c;
   border-radius: 12px;
 }
 
@@ -142,16 +135,9 @@
   margin: 16px 0;
 }
 
-.market-quantity button {
-  width: 40px;
-  height: 40px;
-}
-
 .market-modal-actions {
   display: flex;
   gap: 10px;
-
-  margin-top: 16px;
 }
 
 .market-modal-actions button {
