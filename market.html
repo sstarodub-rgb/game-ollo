@@ -1,60 +1,93 @@
 <!DOCTYPE html>
 <html lang="ru">
-  <head>
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Рынок — Хроники Торговца</title>
 
-    <title>Рынок</title>
-
-    <link rel="stylesheet" href="./main.css?v=1">
+    <link rel="stylesheet" href="./main.css?v=3">
     <link rel="stylesheet" href="./header.css?v=1">
-    <link rel="stylesheet" href="./market.css?v=1">
+    <link rel="stylesheet" href="./market.css?v=3">
 
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
-  </head>
+</head>
+<body>
 
-  <body>
-
-    <div id="market-page">
-
-      <section id="market-city-card" class="market-city-card">
-        <div id="market-city-icon" class="market-city-icon">🏡</div>
-
-        <div>
-          <div id="market-city-name" class="market-city-name">Ривервуд</div>
-          <div class="market-subtitle">Рынок</div>
+    <header id="game-header">
+        <div class="stable-header">   <!-- стиль как в stable.html -->
+            <button id="back-to-city-btn" class="header-back-btn">
+                ← Назад в город
+            </button>
+            <div class="stable-title">Рынок</div>
         </div>
-      </section>
+    </header>
 
-      <section id="market-filters" class="market-filters"></section>
+    <div id="market-page" class="market-page">
 
-      <section id="market-list" class="market-list"></section>
+        <!-- Карточка города -->
+        <section id="market-city-card" class="market-city-card">
+            <div id="market-city-icon" class="market-city-icon">🏪</div>
+            <div>
+                <div id="market-city-name" class="market-city-name">Ривервуд</div>
+                <div id="market-city-region" class="market-city-region">Королевство Эйден</div>
+            </div>
+        </section>
+
+        <!-- Инфо панель -->
+        <div class="market-info-bar">
+            <div>💰 <span id="player-gold">0</span></div>
+            <div>⚖ <span id="player-weight">0</span>/<span id="transport-capacity">0</span></div>
+        </div>
+
+        <!-- Фильтры -->
+        <section id="market-filters" class="market-filters"></section>
+
+        <!-- Таблица товаров -->
+        <section id="market-list" class="market-list">
+            <table id="market-table" class="market-table">
+                <thead>
+                    <tr>
+                        <th></th> <!-- иконка -->
+                        <th>Товар</th>
+                        <th class="text-center">Купить</th>
+                        <th class="text-center">Продать</th>
+                    </tr>
+                </thead>
+                <tbody id="market-tbody">
+                    <!-- Заполняется JS -->
+                </tbody>
+            </table>
+        </section>
 
     </div>
 
+    <!-- Модальное окно -->
     <div id="market-modal" class="market-modal hidden">
-      <div class="market-modal-content">
+        <div class="market-modal-content">
+            <h2 id="modal-title">Сделка</h2>
+            <div id="modal-good-name" class="modal-good-name"></div>
 
-        <h2 id="modal-title">Сделка</h2>
+            <div class="modal-price-info">
+                <div>Цена: <span id="modal-price" class="highlight"></span> монет</div>
+                <div>В наличии: <span id="modal-available"></span></div>
+            </div>
 
-        <div id="modal-price"></div>
+            <div class="market-quantity">
+                <button id="qty-minus" class="qty-btn">−</button>
+                <span id="qty-value" class="qty-value">1</span>
+                <button id="qty-plus" class="qty-btn">+</button>
+            </div>
 
-        <div class="market-quantity">
-          <button id="qty-minus">−</button>
-          <span id="qty-value">1</span>
-          <button id="qty-plus">+</button>
+            <div id="modal-total" class="modal-total">Итого: <span class="highlight">0</span> монет</div>
+
+            <div class="market-modal-actions">
+                <button id="modal-cancel" class="btn-secondary">Отмена</button>
+                <button id="modal-confirm" class="btn-primary">Подтвердить</button>
+            </div>
         </div>
+    </div>
 
-        <div id="modal-total"></div>
-
-        <div class="market-modal-actions">
-          <button id="modal-cancel">Отмена</button>
-          <button id="modal-confirm">Подтвердить</button>
-        </div>
-
-      </div>
-    </<script src="./header.js"></script>
-<script src="./market.js"></script>
-
-  </body>
+    <script src="./header.js"></script>
+    <script src="./market.js"></script>
+</body>
 </html>
