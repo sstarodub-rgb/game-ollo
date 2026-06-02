@@ -1,5 +1,3 @@
-alert("index.js START");
-
 const PLAYER_KEY = "merchantGame";
 
 /* -------------------------
@@ -195,5 +193,3 @@ function init() {
 }
 
 init();
-
-alert("index.js END");
