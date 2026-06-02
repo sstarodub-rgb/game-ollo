@@ -17,43 +17,46 @@ async function init() {
 
   try {
     const res = await fetch("./transport.json?v=" + Date.now());
+
+    if (!res.ok) {
+      throw new Error("transport.json not found");
+    }
+
     transports = await res.json();
   } catch (e) {
-    console.error("TRANSPORT LOAD ERROR", e);
+    console.error("TRANSPORT LOAD ERROR:", e);
     return;
   }
 
   renderTransport();
 
-  document.getElementById("test-btn").onclick = () => {
-    alert("Конюх работает");
-  };
+  const btn = document.getElementById("test-btn");
+
+  if (btn) {
+    btn.onclick = () => {
+      alert("Конюх работает");
+    };
+  }
 }
 
 function renderTransport() {
   const container = document.getElementById("transport-list");
+
+  if (!container) return;
 
   container.innerHTML = "";
 
   transports.forEach(t => {
     const div = document.createElement("div");
 
-    const isCurrent = player.transport?.name === t.name;
+    const isCurrent =
+      player.transport && player.transport.name === t.name;
 
     div.innerHTML = `
-      <div>
-        🐴 ${t.name}
-      </div>
-
-      <div>
-        ⚖ ${t.capacity}
-      </div>
-
-      <div>
-        🚀 ${t.speed}
-      </div>
-
-      <button ${isCurrent ? "disabled" : ""} data-id="${t.id}">
+      <div>🐴 ${t.name}</div>
+      <div>⚖ ${t.capacity}</div>
+      <div>🚀 ${t.speed}</div>
+      <button ${isCurrent ? "disabled" : ""}>
         ${isCurrent ? "Текущий" : "Выбрать"}
       </button>
     `;
