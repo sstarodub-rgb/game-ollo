@@ -24,6 +24,7 @@ function savePlayer(player) {
 ------------------------- */
 
 function getCity(cityId) {
+  alert("город: " +window.CITIES?.find(c => c.id === cityId));
   return window.CITIES?.find(c => c.id === cityId);
 }
 
