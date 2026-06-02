@@ -1,4 +1,3 @@
-alert("transports loaded");
 const TRANSPORTS = [
   {
     id: 1,
