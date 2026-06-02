@@ -1,0 +1,43 @@
+#stable-page {
+  padding: 16px;
+  font-family: "Cinzel", serif;
+  color: #f5e6c8;
+  background: #1b140e;
+  min-height: 100vh;
+}
+
+/* HEADER */
+.stable-header {
+  padding: 12px;
+  border-bottom: 2px solid #c89b3c;
+  margin-bottom: 16px;
+}
+
+.stable-title {
+  font-size: 22px;
+  color: #c89b3c;
+}
+
+.stable-subtitle {
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+/* CARD */
+.stable-card {
+  padding: 14px;
+  border: 1px solid rgba(200,155,60,0.3);
+  border-radius: 12px;
+  background: rgba(0,0,0,0.2);
+}
+
+#test-btn {
+  margin-top: 12px;
+  padding: 10px 14px;
+
+  background: transparent;
+  border: 1px solid #c89b3c;
+  color: #f5e6c8;
+
+  border-radius: 10px;
+}
