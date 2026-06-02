@@ -212,3 +212,4 @@ const ROUTES = {
     }
   ]
 };
+window.ROUTES = ROUTES;
