@@ -1,3 +1,4 @@
+alert("goods loaded")
 const GOODS = [
   {
     id: 1,
