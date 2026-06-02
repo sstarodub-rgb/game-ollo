@@ -1,4 +1,4 @@
-alert("transports loaded")
+alert("transports loaded");
 const TRANSPORTS = [
   {
     id: 1,
