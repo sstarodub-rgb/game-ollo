@@ -1,159 +1,154 @@
-let player = null;
-let city = null;
-let goods = [];
-let cities = [];
-let marketModifier = {};
+// market.js
+let currentFilter = 'all';
+let selectedGood = null;
+let modalMode = null; // 'buy' или 'sell'
 
-let selectedCategory = "Все";
-let categories = ["Все"];
+const STORAGE_KEYS = { PLAYER: "merchantGame" };
 
-async function loadData() {
-  console.log("INIT MARKET");
-
-  const playerData = localStorage.getItem("merchantGame");
-
-  if (!playerData) {
-    console.error("NO PLAYER");
-    return;
-  }
-
-  player = JSON.parse(playerData);
-  console.log("PLAYER:", player);
-
-  try {
-    const goodsRes = await fetch("./goods.json");
-    const citiesRes = await fetch("./cities.json");
-
-    console.log("GOODS STATUS:", goodsRes.status);
-    console.log("CITIES STATUS:", citiesRes.status);
-
-    if (!goodsRes.ok || !citiesRes.ok) {
-      console.error("JSON FILES NOT FOUND");
-      return;
-    }
-
-    goods = await goodsRes.json();
-    cities = await citiesRes.json();
-
-    console.log("GOODS LOADED:", goods.length);
-    console.log("CITIES LOADED:", cities.length);
-
-  } catch (e) {
-    console.error("FETCH ERROR:", e);
-    return;
-  }
-
-  city = cities.find(c => c.id == player.cityId);
-
-  console.log("FOUND CITY:", city);
-
-  if (!city) {
-    console.error("CITY NOT FOUND");
-    return;
-  }
-
-  if (!city.market) {
-    console.error("NO MARKET IN CITY");
-    return;
-  }
-
-  marketModifier =
-    JSON.parse(localStorage.getItem("marketModifier")) || {};
-
-  buildCategories();
-  renderCity();
-  renderFilters();
-  renderGoods();
+function getPlayer() {
+    const data = localStorage.getItem(STORAGE_KEYS.PLAYER);
+    return data ? JSON.parse(data) : null;
 }
 
-function buildCategories() {
-  const set = new Set();
-
-  goods.forEach(g => {
-    if (g.categoryName) set.add(g.categoryName);
-  });
-
-  categories = ["Все", ...set];
+function savePlayer(player) {
+    localStorage.setItem(STORAGE_KEYS.PLAYER, JSON.stringify(player));
 }
 
-function renderCity() {
-  document.getElementById("market-city-name").textContent = city.name;
-  document.getElementById("market-city-icon").textContent = city.icon;
+function updateHeaderInfo(player) {
+    document.getElementById('player-gold').textContent = player.gold;
+    document.getElementById('player-weight').textContent = player.weight || 0;
+    document.getElementById('transport-capacity').textContent = player.transport?.capacity || 0;
 }
 
-function renderFilters() {
-  const el = document.getElementById("market-filters");
-  el.innerHTML = "";
-
-  categories.forEach(cat => {
-    const btn = document.createElement("button");
-    btn.textContent = cat;
-    btn.className = "market-filter-btn";
-
-    if (cat === selectedCategory) {
-      btn.classList.add("active");
-    }
-
-    btn.onclick = () => {
-      selectedCategory = cat;
-      renderFilters();
-      renderGoods();
-    };
-
-    el.appendChild(btn);
-  });
+// Получить текущую цену
+function getCurrentPrice(good, type) { // type: 'buy' или 'sell'
+    const base = good.basePrice;
+    const city = cities.find(c => c.id === getPlayer().cityId);
+    const modifier = city?.market?.priceModifier || 1.0;
+    const random = 0.9 + Math.random() * 0.2; // ±10%
+    
+    let price = Math.round(base * modifier * random);
+    return type === 'sell' ? Math.round(price * 0.85) : price; // продажа дешевле
 }
 
-function modifier(id) {
-  return marketModifier[id] || 1;
-}
+function renderMarketTable() {
+    const tbody = document.getElementById('market-tbody');
+    tbody.innerHTML = '';
 
-function buyPrice(g) {
-  return Math.round(g.basePrice * modifier(g.id));
-}
+    const player = getPlayer();
+    const city = cities.find(c => c.id === player.cityId);
+    const inventoryMap = new Map(player.inventory.map(item => [item.goodId, item.quantity]));
 
-function sellPrice(g) {
-  return Math.round(g.basePrice * modifier(g.id) * 0.8);
-}
+    goods.forEach(good => {
+        const canBuy = city.market.buy.includes(good.id);
+        const canSell = city.market.sell.includes(good.id);
 
-function canBuy(id) {
-  return city.market.buy.includes(id);
-}
+        if (!canBuy && !canSell) return;
 
-function canSell(id) {
-  return city.market.sell.includes(id);
-}
+        const buyPrice = canBuy ? getCurrentPrice(good, 'buy') : null;
+        const sellPrice = canSell ? getCurrentPrice(good, 'sell') : null;
+        const qtyInInventory = inventoryMap.get(good.id) || 0;
 
-function renderGoods() {
-  const el = document.getElementById("market-list");
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td class="good-icon">${good.icon}</td>
+            <td>
+                <strong>${good.name}</strong><br>
+                <small>${good.category}</small>
+            </td>
+            <td class="text-center">
+                ${canBuy ? `<button class="btn-buy" data-id="${good.id}" data-mode="buy">${buyPrice} 💰</button>` : '-'}
+            </td>
+            <td class="text-center">
+                ${canSell && qtyInInventory > 0 
+                    ? `<button class="btn-sell" data-id="${good.id}" data-mode="sell">${sellPrice} 💰</button>` 
+                    : '<span class="text-muted">—</span>'}
+            </td>
+        `;
 
-  el.innerHTML = `
-    <div class="market-header">
-      <div>Товар</div>
-      <div>Продажа</div>
-      <div>Покупка</div>
-    </div>
-  `;
+        tbody.appendChild(row);
+    });
 
-  console.log("RENDER GOODS");
-
-  goods
-    .filter(g =>
-      selectedCategory === "Все" ||
-      g.categoryName === selectedCategory
-    )
-    .forEach(g => {
-      const row = document.createElement("div");
-      row.className = "market-row";
-
-      row.innerHTML = `
-        <div>${g.icon} ${g.name}</div>
-        <div>${canSell(g.id) ? sellPrice(g) : "—"}</div>
-        <div>${canBuy(g.id) ? buyPrice(g) : "—"}</div>
-      `;
-
-      el.appendChild(row);
+    // Привязываем события
+    document.querySelectorAll('.btn-buy, .btn-sell').forEach(btn => {
+        btn.addEventListener('click', () => openModal(parseInt(btn.dataset.id), btn.dataset.mode));
     });
 }
 
-loadData();
+function openModal(goodId, mode) {
+    const good = goods.find(g => g.id === goodId);
+    if (!good) return;
+
+    selectedGood = good;
+    modalMode = mode;
+
+    const player = getPlayer();
+    const city = cities.find(c => c.id === player.cityId);
+    const price = getCurrentPrice(good, mode);
+    const available = mode === 'buy' 
+        ? 999 // для покупки почти не ограничено
+        : (player.inventory.find(i => i.goodId === goodId)?.quantity || 0);
+
+    document.getElementById('modal-title').textContent = mode === 'buy' ? 'Покупка' : 'Продажа';
+    document.getElementById('modal-good-name').textContent = good.name;
+    document.getElementById('modal-price').textContent = price;
+    document.getElementById('modal-available').textContent = available;
+
+    document.getElementById('qty-value').textContent = 1;
+    updateTotal();
+
+    document.getElementById('market-modal').classList.remove('hidden');
+}
+
+// Обновление итого в модалке
+function updateTotal() {
+    const qty = parseInt(document.getElementById('qty-value').textContent);
+    const price = parseInt(document.getElementById('modal-price').textContent);
+    document.getElementById('modal-total').innerHTML = `Итого: <span class="highlight">${qty * price}</span> монет`;
+}
+
+// Инициализация
+document.addEventListener('DOMContentLoaded', () => {
+    const player = getPlayer();
+    if (!player) {
+        window.location.href = 'index.html';
+        return;
+    }
+
+    // Заполняем город
+    const city = cities.find(c => c.id === player.cityId);
+    if (city) {
+        document.getElementById('market-city-name').textContent = city.name;
+        document.getElementById('market-city-region').textContent = city.region || '';
+        document.getElementById('market-city-icon').textContent = city.icon || '🏪';
+    }
+
+    updateHeaderInfo(player);
+    renderMarketTable();
+
+    // Кнопка назад
+    document.getElementById('back-to-city-btn').addEventListener('click', () => {
+        window.location.href = 'index.html';
+    });
+
+    // Модалка
+    document.getElementById('modal-cancel').addEventListener('click', () => {
+        document.getElementById('market-modal').classList.add('hidden');
+    });
+
+    document.getElementById('qty-plus').addEventListener('click', () => {
+        let qty = parseInt(document.getElementById('qty-value').textContent);
+        document.getElementById('qty-value').textContent = qty + 1;
+        updateTotal();
+    });
+
+    document.getElementById('qty-minus').addEventListener('click', () => {
+        let qty = parseInt(document.getElementById('qty-value').textContent);
+        if (qty > 1) {
+            document.getElementById('qty-value').textContent = qty - 1;
+            updateTotal();
+        }
+    });
+
+    // TODO: добавить логику подтверждения сделки в modal-confirm
+});
