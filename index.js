@@ -97,10 +97,11 @@ function renderCity(player) {
   </div>
 
   <!-- 3. COORDS -->
-  <div class="city-coordinates">
-    x: ${city.x} / y: ${city.y}
+  <div class="city-footer">
+    <div class="city-coordinates">
+      x: ${city.x} / y: ${city.y}
+    </div>
   </div>
-
 </section>
   `;
 }
