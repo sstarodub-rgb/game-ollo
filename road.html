@@ -3,24 +3,26 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Путь торговца</title>
+  <title>Путешествие</title>
   <link rel="stylesheet" href="main.css">
   <link rel="stylesheet" href="road.css">
 </head>
 <body>
   <div id="road-screen">
     <div class="travel-card">
-      <h2 id="status-text">Путешествие началось...</h2>
+      <h2 id="status-text">Ваш караван в пути...</h2>
+      
       <div class="map-container">
         <svg class="road-svg" viewBox="0 0 100 100" preserveAspectRatio="none">
           <path id="road-path" d="M 5 80 Q 50 20 95 80" />
         </svg>
+        
         <div id="wagon">🐎</div>
       </div>
-      <p class="hint">Ваш караван в пути...</p>
+      
+      <p class="hint">Ожидайте прибытия в город</p>
     </div>
   </div>
-  <script src="cities.js"></script>
   <script src="road.js"></script>
 </body>
 </html>
