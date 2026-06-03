@@ -1,0 +1,28 @@
+.weight-panel {
+    background: var(--panel-bg-bottom);
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    border: 1px solid var(--panel-border);
+}
+
+.weight-text {
+    margin-bottom: 8px;
+    font-family: var(--font-title);
+    text-align: center;
+}
+
+.progress-bg {
+    height: 12px;
+    background: #2a1f14;
+    border: 1px solid var(--panel-border);
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: var(--gold);
+    width: 0%;
+    transition: width 0.3s ease;
+}
