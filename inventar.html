@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Багаж — Хроники Торговца</title>
+    <link rel="stylesheet" href="./main.css">
+    <link rel="stylesheet" href="./header.css">
+    <link rel="stylesheet" href="./market.css"> <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header id="game-header"></header>
+
+    <div class="market-page">
+        <div class="stable-header" style="margin-bottom: 20px;">
+            <button id="back-to-city-btn" class="header-back-btn">← Назад в город</button>
+            <div class="stable-title">Багаж</div>
+        </div>
+
+        <div class="weight-panel">
+            <div class="weight-text">Загруженность: <span id="weight-numbers">0/0</span></div>
+            <div class="progress-bg">
+                <div id="progress-bar" class="progress-fill"></div>
+            </div>
+        </div>
+
+        <section class="market-list">
+            <table class="market-table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Товар</th>
+                        <th class="text-center">Кол-во</th>
+                        <th class="text-center">Вес</th>
+                    </tr>
+                </thead>
+                <tbody id="inventory-tbody"></tbody>
+            </table>
+        </section>
+    </div>
+
+    <script src="./goods.js"></script>
+    <script src="./header.js"></script>
+    <script src="./inventar.js"></script>
+</body>
+</html>
