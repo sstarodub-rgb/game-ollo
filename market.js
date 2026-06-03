@@ -1,8 +1,8 @@
 // market.js
 document.addEventListener('DOMContentLoaded', () => {
-    const player = JSON.parse(localStorage.getItem("merchantGame"));
-    if (!player) {
-        window.location.href = 'index.html';
+    const player = JSON.parse(localStorage.getItem("merchantGame") || "{}");
+    if (!player.cityId) {
+        window.location.href = "index.html";
         return;
     }
 
@@ -14,26 +14,30 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('market-city-icon').textContent = city.icon || '🏪';
     }
 
-    // Инфо
+    // Инфо-панель
     document.getElementById('player-gold').textContent = player.gold || 0;
     document.getElementById('player-weight').textContent = player.weight || 0;
     document.getElementById('transport-capacity').textContent = player.transport?.capacity || 30;
 
-    // Кнопка назад
+    // Кнопка "Назад в город"
     document.getElementById('back-to-city-btn').addEventListener('click', () => {
         window.location.href = 'index.html';
     });
 
     // Закрытие модалки
-    document.getElementById('modal-cancel').addEventListener('click', () => {
-        document.getElementById('market-modal').classList.add('hidden');
-    });
+    document.getElementById('modal-cancel').addEventListener('click', closeModal);
 
-    // Показываем, что таблица пока пустая (для теста)
+    // Заглушка таблицы (пока без полной логики)
     document.getElementById('market-tbody').innerHTML = `
-        <tr><td colspan="4" style="text-align:center; padding:40px;">
-            Таблица товаров будет здесь...<br>
-            <small>Скоро добавим товары</small>
-        </td></tr>
+        <tr>
+            <td colspan="4" style="padding: 80px 20px; text-align: center; color: #c9b39b;">
+                Таблица товаров загружается...<br>
+                <small>Скоро здесь будут товары</small>
+            </td>
+        </tr>
     `;
 });
+
+function closeModal() {
+    document.getElementById('market-modal').style.display = 'none';
+}
