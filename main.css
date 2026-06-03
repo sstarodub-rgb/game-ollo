@@ -161,14 +161,12 @@ body {
 
 .actions-panel {
   display: flex;
-  flex-direction: column;
-  gap: 10px;
-
+  flex-direction: row;
+  gap: 3px;
   margin-top: 14px;
 }
 
 .actions-panel a {
-  width: 24%;
   padding: 14px;
   border: 1px solid var(--gold);
   border-radius: 10px;
