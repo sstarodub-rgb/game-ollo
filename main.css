@@ -133,12 +133,22 @@ body {
 .actions-panel {
   display: flex;
   flex-direction: row;
-  gap: 3px;
+  gap: 6px;
   margin-top: 14px;
+
+  width: 100%;
 }
 
+/* каждая кнопка = одинаковая ширина */
 .actions-panel a {
+  flex: 1; /* 👈 ключевой момент */
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   padding: 11px;
+
   border: 1px solid var(--gold);
   border-radius: 10px;
 
@@ -147,18 +157,23 @@ body {
     var(--button-top),
     var(--button-bottom)
   );
+
   text-decoration: none;
   color: var(--gold-light);
+
   font-family: var(--font-title);
-  font-size: 18px;
+  font-size: 16px; /* чуть уменьшил, чтобы влезало */
   font-weight: 600;
   letter-spacing: 0.5px;
 
   cursor: pointer;
+
+  white-space: nowrap; /* чтобы текст не ломался */
 }
 
-.actions-panel button:active {
-  transform: scale(0.98);
+/* нормальный active эффект */
+.actions-panel a:active {
+  transform: scale(0.97);
 }
 
 /* -------------------------
