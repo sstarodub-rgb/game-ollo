@@ -158,7 +158,6 @@ function init() {
   }
 
   renderCity(player);
-  renderActions();
   renderLog(player);
 }
 
