@@ -6,17 +6,20 @@
   <title>Карта — Хроники Торговца</title>
   <link rel="stylesheet" href="./main.css">
   <link rel="stylesheet" href="./header.css">
+  <link rel="stylesheet" href="./stable.css">
   <link rel="stylesheet" href="./map.css">
 </head>
 <body>
 
-  <div id="game">
-    <main class="map-container">
-      <div class="stable-header" style="margin-bottom: 20px;">
-        <button id="back-to-city-btn" class="header-back-btn">← Назад</button>
-        <div class="stable-title">Карта мира</div>
-      </div>
+  <header id="game-header">
+    <div class="stable-header">
+      <button id="back-to-city-btn" class="header-back-btn">← Назад</button>
+      <div class="stable-title">Карта мира</div>
+    </div>
+  </header>
 
+  <div id="game">
+    <main id="stable">
       <div id="map-field" class="map-field"></div>
 
       <div class="actions-panel">
@@ -27,7 +30,6 @@
 
   <script src="./cities.js"></script>
   <script src="./routes.js"></script>
-  <script src="./header.js"></script>
   <script src="./map.js"></script>
 </body>
 </html>
