@@ -1,31 +1,40 @@
 .map-field {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
-  padding: 20px;
-  min-height: 300px;
+  position: relative;
+  width: 100%;
+  height: 500px; /* Фиксируем высоту для стабильности */
   background: #dcc8a4;
-  border: 1px solid var(--panel-border);
   border-radius: 12px;
   margin-top: 10px;
 }
 
 .city-node {
+  position: absolute;
   display: flex;
   flex-direction: column;
   align-items: center;
   cursor: pointer;
   transition: transform 0.3s ease;
-  width: 80px;
+  z-index: 2;
 }
 
-/* Размеры для разного статуса */
-.city-node.big { transform: scale(1.4); }
-.city-node.small { transform: scale(0.7); opacity: 0.8; }
+/* Эффект выделения (красивый свет) */
+.city-node.selected {
+  transform: scale(1.2);
+  filter: drop-shadow(0 0 10px #ff0000);
+}
 
-.city-node span { font-size: 32px; }
-.city-node label { font-family: var(--font-title); font-size: 12px; font-weight: bold; color: #4a3421; }
+.road-svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
 
-.city-node.selected { outline: 2px solid red; border-radius: 8px; }
+.road-line {
+  fill: none;
+  stroke: #8b5a2b;
+  stroke-width: 2;
+  stroke-dasharray: 4;
+}
