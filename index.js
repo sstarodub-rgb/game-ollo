@@ -138,7 +138,7 @@ function renderCreateScreen() {
 
   game.innerHTML = `
     <div class="create-player-wrapper">
-      <button id="create-player-btn">Создать торговца</button>
+      <button class="create-player-btn" id="create-player-btn">Создать торговца</button>
     </div>
   `;
 
