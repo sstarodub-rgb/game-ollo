@@ -46,68 +46,6 @@ body {
 }
 
 /* -------------------------
-   ЛОКАЦИЯ (СТАРЫЙ HEADER)
-------------------------- */
-
-.location-card {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-
-  padding: 14px;
-
-  background: linear-gradient(
-    to bottom,
-    var(--panel-bg-top),
-    var(--panel-bg-bottom)
-  );
-
-  border: 1px solid var(--panel-border);
-  border-radius: 12px;
-}
-
-.location-icon {
-  font-size: 38px;
-  flex-shrink: 0;
-}
-
-.location-info {
-  min-width: 0;
-}
-
-.city-name {
-  margin: 0;
-
-  color: var(--text-main);
-
-  font-family: var(--font-title);
-  font-size: 28px;
-  font-weight: 700;
-  line-height: 1;
-
-  text-shadow: 0 0 8px rgba(200, 155, 60, 0.25);
-}
-
-.city-first-letter {
-  color: var(--gold);
-
-  font-size: 34px;
-
-  text-shadow: 0 0 12px rgba(200, 155, 60, 0.4);
-}
-
-.city-type {
-  margin-top: 4px;
-
-  color: var(--text-muted);
-
-  font-family: var(--font-text);
-  font-size: 15px;
-  font-style: italic;
-  letter-spacing: 1px;
-}
-
-/* -------------------------
    НОВАЯ КАРТОЧКА ГОРОДА
 ------------------------- */
 
@@ -115,18 +53,17 @@ body {
   position: relative;
 
   display: flex;
-  flex-direction: row;
+  flex-direction: colunm;
   align-items: flex-start;
-
   gap: 8px;
 }
-.city-card div {
+.city-top div {
   display: flex;
   flex-direction: column;   
 }
 .city-top {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: flex-start;
 
   gap: 4px;
