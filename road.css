@@ -1,33 +1,64 @@
 #road-screen { 
-  display: flex; justify-content: center; align-items: center; 
-  height: 100vh; background: #2c2420; /* Темный фон для контраста */
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+  height: 100vh; 
+  background: #2c2420; 
+  margin: 0;
 }
 
 .travel-card { 
-  background: #dcc8a4; padding: 20px; border-radius: 15px;
-  width: 90%; max-width: 400px; text-align: center;
-  border: 3px solid #6f5632; box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+  background: #dcc8a4; 
+  padding: 25px; 
+  border-radius: 15px;
+  width: 85%; 
+  max-width: 400px; 
+  text-align: center;
+  border: 4px solid #6f5632; 
+  box-shadow: 0 10px 30px rgba(0,0,0,0.6);
 }
 
 .map-container { 
-  position: relative; width: 100%; height: 150px; 
-  background: #e8d5b5; border-radius: 10px; margin: 20px 0;
+  position: relative; 
+  width: 100%; 
+  height: 150px; 
+  background: #e8d5b5; 
+  border: 2px solid #6f5632;
+  border-radius: 10px; 
+  margin: 20px 0;
   overflow: hidden;
 }
 
 .road-svg { width: 100%; height: 100%; }
-#road-path { fill: none; stroke: #6f5632; stroke-width: 4; stroke-dasharray: 8; }
+
+#road-path { 
+  fill: none; 
+  stroke: #6f5632; 
+  stroke-width: 4; 
+  stroke-dasharray: 6; 
+}
 
 #wagon { 
-  position: absolute; font-size: 30px; 
-  offset-path: path('M 5 80 Q 50 20 95 80');
+  position: absolute; 
+  font-size: 35px; 
+  z-index: 10;
+  /* Начальная точка */
+  left: 0%; 
+  top: 50%; 
   animation: moveWagon 8s linear forwards;
 }
 
 @keyframes moveWagon {
-  0% { offset-distance: 0%; transform: rotate(10deg); }
-  50% { transform: rotate(-10deg); }
-  100% { offset-distance: 100%; transform: rotate(10deg); }
+  0%   { left: 0%;   top: 60%; }
+  25%  { left: 25%;  top: 30%; }
+  50%  { left: 50%;  top: 15%; }
+  75%  { left: 75%;  top: 30%; }
+  100% { left: 90%;  top: 60%; }
 }
 
-.hint { font-family: sans-serif; color: #6f5632; font-style: italic; }
+.hint { 
+  font-family: sans-serif; 
+  color: #6f5632; 
+  font-weight: bold; 
+  margin-top: 10px; 
+}
