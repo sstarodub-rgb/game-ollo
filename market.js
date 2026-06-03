@@ -1,7 +1,5 @@
-// market.js
-
 const player = getPlayer();
-let marketPrices = {}; // Кэш для фиксации цен в текущем городе
+let marketPrices = {}; 
 let currentGood = null;
 let currentMode = null;
 let currentPrice = 0;
@@ -27,7 +25,6 @@ function initMarketPage() {
         ? window.CITIES.find(c => c.id === player.cityId)
         : cities.find(c => c.id === player.cityId);
 
-    // Генерируем цены один раз при входе в город
     marketPrices = {};
     window.GOODS.forEach(good => {
         marketPrices[good.id] = {
@@ -104,7 +101,6 @@ function openTradeModal(goodId, mode, city) {
     if (!currentGood) return;
 
     currentMode = mode;
-    // Используем зафиксированную цену из кэша
     currentPrice = marketPrices[goodId][mode];
 
     const available = mode === 'buy' ? 999 : (player.inventory?.find(i => i.goodId == goodId)?.quantity || 0);
@@ -155,8 +151,14 @@ function confirmTrade() {
     }
 
     savePlayer(player);
+    
+    // Обновляем хедер
+    if (typeof updateHeaderInfo === 'function') {
+        updateHeaderInfo(player);
+    }
+
     closeModal();
-    // Перерисовываем таблицу для обновления статуса кнопок продажи
+    
     const city = window.CITIES
         ? window.CITIES.find(c => c.id === player.cityId)
         : cities.find(c => c.id === player.cityId);
