@@ -30,6 +30,11 @@
     width: 60px;
     text-align: center;
 }
+.fantasy-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    filter: grayscale(1);
+}
 
 /* Модальное окно */
 .market-modal {
