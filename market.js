@@ -1,5 +1,10 @@
 // market.js
+
 const player = getPlayer();
+let marketPrices = {}; // Кэш для фиксации цен в текущем городе
+let currentGood = null;
+let currentMode = null;
+let currentPrice = 0;
 
 if (!player || !player.cityId) {
     alert("Ошибка: данные игрока не найдены!");
@@ -21,6 +26,15 @@ function initMarketPage() {
     const city = window.CITIES
         ? window.CITIES.find(c => c.id === player.cityId)
         : cities.find(c => c.id === player.cityId);
+
+    // Генерируем цены один раз при входе в город
+    marketPrices = {};
+    window.GOODS.forEach(good => {
+        marketPrices[good.id] = {
+            buy: getCurrentPrice(good, 'buy', city),
+            sell: getCurrentPrice(good, 'sell', city)
+        };
+    });
 
     renderMarketTable(city);
 
@@ -51,16 +65,22 @@ function renderMarketTable(city) {
 
         if (!canBuy && !canSell) return;
 
-        const buyPrice = canBuy ? getCurrentPrice(good, 'buy', city) : null;
-        const sellPrice = canSell ? getCurrentPrice(good, 'sell', city) : null;
+        const buyPrice = canBuy ? marketPrices[good.id].buy : null;
+        const sellPrice = canSell ? marketPrices[good.id].sell : null;
         const inStock = inventoryMap.get(good.id) || 0;
 
         const row = document.createElement('tr');
         row.innerHTML = `
             <td class="good-icon">${good.icon || '📦'}</td>
             <td><strong>${good.name}</strong><br><small>${good.categoryName || good.category || ''}</small></td>
-            <td class="text-center">${canBuy ? `<button class="fantasy-btn" data-id="${good.id}" data-mode="buy">${buyPrice} 💰</button>` : '-'}</td>
-            <td class="text-center">${canSell && inStock > 0 ? `<button class="fantasy-btn" data-id="${good.id}" data-mode="sell">${sellPrice} 💰</button>` : '—'}</td>
+            <td class="text-center">
+                ${canBuy ? `<button class="fantasy-btn" data-id="${good.id}" data-mode="buy">${buyPrice} 💰</button>` : '-'}
+            </td>
+            <td class="text-center">
+                ${canSell 
+                    ? `<button class="fantasy-btn" data-id="${good.id}" data-mode="sell" ${inStock === 0 ? 'disabled' : ''}>${sellPrice} 💰</button>` 
+                    : '—'}
+            </td>
         `;
         tbody.appendChild(row);
     });
@@ -71,8 +91,6 @@ function renderMarketTable(city) {
         });
     });
 }
-
-let currentGood = null, currentMode = null, currentPrice = 0;
 
 function setupModal() {
     document.getElementById('modal-cancel').addEventListener('click', closeModal);
@@ -86,7 +104,8 @@ function openTradeModal(goodId, mode, city) {
     if (!currentGood) return;
 
     currentMode = mode;
-    currentPrice = getCurrentPrice(currentGood, mode, city);
+    // Используем зафиксированную цену из кэша
+    currentPrice = marketPrices[goodId][mode];
 
     const available = mode === 'buy' ? 999 : (player.inventory?.find(i => i.goodId == goodId)?.quantity || 0);
 
@@ -137,5 +156,9 @@ function confirmTrade() {
 
     savePlayer(player);
     closeModal();
-    renderMarketTable(window.CITIES ? window.CITIES.find(c => c.id === player.cityId) : null);
+    // Перерисовываем таблицу для обновления статуса кнопок продажи
+    const city = window.CITIES
+        ? window.CITIES.find(c => c.id === player.cityId)
+        : cities.find(c => c.id === player.cityId);
+    renderMarketTable(city);
 }
