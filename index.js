@@ -70,34 +70,38 @@ function renderCity(player) {
   if (!container || !city) return;
 
   container.innerHTML = `
-    <section class="location-card city-card">
+   <section class="location-card city-card">
 
-      <div class="city-top">
-        <div class="location-icon">
-          ${city.icon}
-        </div>
-        <div>
-        <h2 class="city-name">
-          ${city.name}
-        </h2>
+  <!-- 1. HEADER -->
+  <div class="city-header">
+    
+    <div class="city-icon">
+      ${city.icon}
+    </div>
 
-        <div class="city-type">
-          ${city.type}
-        </div>
-        </div>
+    <div class="city-title-block">
+      <h2 class="city-name">
+        <span class="city-name-first">${city.name[0]}</span>${city.name.slice(1)}
+      </h2>
+
+      <div class="city-type">
+        ${city.type}
       </div>
+    </div>
 
-      <div class="city-divider"></div>
+  </div>
 
-      <div class="city-description">
-        ${city.description}
-      </div>
+  <!-- 2. DESCRIPTION -->
+  <div class="city-description">
+    ${city.description}
+  </div>
 
-      <div class="city-coordinates">
-        x: ${city.x} / y: ${city.y}
-      </div>
+  <!-- 3. COORDS -->
+  <div class="city-coordinates">
+    x: ${city.x} / y: ${city.y}
+  </div>
 
-    </section>
+</section>
   `;
 }
 
