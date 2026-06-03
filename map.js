@@ -4,11 +4,18 @@ const travelBtn = document.getElementById('travel-btn');
 const backBtn = document.getElementById('back-to-city-btn');
 const routes = window.ROUTES[player.cityId] || [];
 
-// Логика кнопок
-backBtn.onclick = () => window.location.href = 'index.html';
-travelBtn.onclick = () => window.location.href = 'road.html';
+// Обработчики кнопок
+backBtn.addEventListener('click', () => {
+    window.location.href = 'index.html';
+});
 
-// Отрисовка
+travelBtn.addEventListener('click', () => {
+    if (!travelBtn.disabled) {
+        window.location.href = 'road.html';
+    }
+});
+
+// Отрисовка городов
 window.CITIES.forEach((city) => {
     const div = document.createElement('div');
     let pos, size;
@@ -29,13 +36,14 @@ window.CITIES.forEach((city) => {
     div.style.top = pos.top;
     div.innerHTML = `<span>${city.icon}</span><label>${city.name}</label>`;
 
-    div.onclick = () => {
+    div.addEventListener('click', () => {
         if (routes.includes(city.id)) {
             document.querySelectorAll('.city-node').forEach(n => n.classList.remove('selected'));
             div.classList.add('selected');
             travelBtn.disabled = false;
             localStorage.setItem('targetCityId', city.id);
         }
-    };
+    });
+
     mapField.appendChild(div);
 });
