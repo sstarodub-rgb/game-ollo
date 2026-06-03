@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Карта — Хроники Торговца</title>
+  <title>Карта мира</title>
   <link rel="stylesheet" href="./main.css">
   <link rel="stylesheet" href="./header.css">
   <link rel="stylesheet" href="./stable.css">
@@ -18,20 +18,18 @@
     </div>
   </header>
 
-  <div id="game">
-    <main id="stable">
-      <div id="map-field" class="map-field">
-        <svg class="road-svg">
-          <path class="road-line" d="M 50% 25% Q 35% 40% 25% 55%" />
-          <path class="road-line" d="M 50% 25% Q 65% 40% 75% 55%" />
-        </svg>
-      </div>
+  <main id="stable">
+    <div id="map-field" class="map-field">
+      <svg class="road-svg" viewBox="0 0 100 100" preserveAspectRatio="none">
+        <path class="road-line" d="M 50 25 Q 35 40 30 55" />
+        <path class="road-line" d="M 50 25 Q 65 40 70 55" />
+      </svg>
+    </div>
 
-      <div class="actions-panel" style="margin-top: 20px; text-align: center;">
-        <button id="travel-btn" class="create-player-btn" disabled>В путь</button>
-      </div>
-    </main>
-  </div>
+    <div class="actions-panel" style="margin-top: 20px; text-align: center;">
+      <button id="travel-btn" class="create-player-btn" disabled>В путь</button>
+    </div>
+  </main>
 
   <script src="./cities.js"></script>
   <script src="./routes.js"></script>
