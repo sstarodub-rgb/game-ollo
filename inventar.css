@@ -1,60 +1,24 @@
-/* Стили для инвентаря */
-.weight-panel {
-    background: var(--panel-bg-bottom);
-    padding: 15px;
-    border-radius: 8px;
-    border: 1px solid var(--panel-border);
-    color: var(--text-main);
-}
-
-.weight-text {
-    margin-bottom: 8px;
-    font-family: var(--font-title);
-    text-align: center;
-    font-size: 16px;
-}
-
-.progress-bg {
-    height: 12px;
-    background: #2a1f14;
-    border: 1px solid var(--panel-border);
-    border-radius: 6px;
-    overflow: hidden;
-}
-
-.progress-fill {
-    height: 100%;
-    background: var(--gold);
-    width: 0%;
-    transition: width 0.3s ease;
-}
-
-/* Настройка таблицы, чтобы она соответствовала стилю игры */
-/* Исправление таблицы */
-.market-list {
-    width: 100%;
-    margin-top: 10px;
-}
-
+/* Стили для таблицы и прогресс-бара */
 .market-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: var(--panel-bg-bottom);
-    border: 1px solid var(--panel-border);
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--panel-bg-bottom);
+  border: 1px solid var(--panel-border);
+  margin-top: 10px;
 }
-
 .market-table th, .market-table td {
-    padding: 12px;
-    text-align: left;
-    border-bottom: 1px solid #3c2a1f;
+  padding: 12px;
+  border-bottom: 1px solid #3c2a1f;
+  text-align: left;
 }
+.text-center { text-align: center; }
 
-/* Исправление прогресс-бара */
 .weight-panel {
-    width: 100%;
-    background: var(--panel-bg-bottom);
-    padding: 15px;
-    border-radius: 8px;
-    border: 1px solid var(--panel-border);
-    color: var(--text-main);
+  background: var(--panel-bg-bottom);
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid var(--panel-border);
 }
+.weight-text { margin-bottom: 8px; font-family: var(--font-title); text-align: center; }
+.progress-bg { height: 12px; background: #2a1f14; border: 1px solid var(--panel-border); border-radius: 6px; overflow: hidden; }
+.progress-fill { height: 100%; background: var(--gold); width: 0%; transition: width 0.3s ease; }
