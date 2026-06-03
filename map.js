@@ -3,38 +3,39 @@ let selectedCityId = null;
 
 function initMap() {
     const mapField = document.getElementById('map-field');
-    const travelBtn = document.getElementById('travel-btn');
+    const currentCityId = player.cityId;
+    const availableRoutes = window.ROUTES[currentCityId] || [];
 
     window.CITIES.forEach(city => {
         const div = document.createElement('div');
-        div.className = `city-node ${city.id === player.cityId ? 'current' : ''}`;
-        
-        // Масштабируем координаты (ваши 0-1000 превращаем в 0-100%)
-        div.style.left = (city.x / 10) + '%';
-        div.style.top = (city.y / 10) + '%';
-        
+        let pos = { left: '10%', top: '10%' }; // По умолчанию где-то с краю
+        let className = 'city-node small';
+
+        // 1. Текущий город (Центр)
+        if (city.id === currentCityId) {
+            pos = { left: '50%', top: '50%' };
+            className = 'city-node big current';
+        } 
+        // 2. Доступные города (Слева-вверх и Справа-вниз)
+        else if (availableRoutes.includes(city.id)) {
+            const index = availableRoutes.indexOf(city.id);
+            pos = index === 0 ? { left: '25%', top: '30%' } : { left: '75%', top: '70%' };
+            className = 'city-node big';
+        }
+
+        div.className = className;
+        div.style.left = pos.left;
+        div.style.top = pos.top;
         div.innerHTML = `<span>${city.icon}</span><label>${city.name}</label>`;
-        
+
         div.onclick = () => {
-            // Проверка доступности через ROUTES
-            if (window.ROUTES[player.cityId] && window.ROUTES[player.cityId].includes(city.id)) {
+            if (availableRoutes.includes(city.id)) {
                 selectedCityId = city.id;
                 document.querySelectorAll('.city-node').forEach(n => n.classList.remove('selected'));
                 div.classList.add('selected');
-                travelBtn.disabled = false;
+                document.getElementById('travel-btn').disabled = false;
             }
         };
         mapField.appendChild(div);
     });
-
-    document.getElementById('travel-btn').onclick = () => {
-        if (selectedCityId) {
-            localStorage.setItem('targetCityId', selectedCityId);
-            window.location.href = 'road.html';
-        }
-    };
-
-    document.getElementById('back-to-city-btn').onclick = () => window.location.href = 'index.html';
 }
-
-initMap();
