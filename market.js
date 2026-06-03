@@ -43,10 +43,28 @@ function initMarketPage() {
     setupModal();
 }
 
+/**
+ * Рассчитывает цену с учетом города:
+ * - Если город продает товар, цена покупки для игрока ниже (-10%)
+ * - Если город нуждается в товаре, цена продажи для игрока выше (+15%)
+ */
 function getCurrentPrice(good, type, city) {
     const base = good.basePrice || 10;
     const random = 0.9 + Math.random() * 0.2;
-    let price = Math.round(base * random);
+    let price = base * random;
+
+    // Модификаторы города
+    if (type === 'buy' && city?.market?.buy?.includes(good.id)) {
+        price *= 0.9; // Город специализируется на продаже — цена для нас приятнее
+    }
+
+    if (type === 'sell' && city?.market?.sell?.includes(good.id)) {
+        price *= 1.15; // Город нуждается в товаре — платит нам больше
+    }
+
+    price = Math.round(price);
+    
+    // Для продажи игроком применяем базовый дисконт рынка
     return type === 'sell' ? Math.round(price * 0.8) : price;
 }
 
@@ -152,7 +170,6 @@ function confirmTrade() {
 
     savePlayer(player);
     
-    // Обновляем хедер
     if (typeof updateHeaderInfo === 'function') {
         updateHeaderInfo(player);
     }
