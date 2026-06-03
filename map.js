@@ -1,52 +1,41 @@
 const player = JSON.parse(localStorage.getItem("merchantGame"));
-let selectedCityId = null;
+const mapField = document.getElementById('map-field');
+const travelBtn = document.getElementById('travel-btn');
+const backBtn = document.getElementById('back-to-city-btn');
+const routes = window.ROUTES[player.cityId] || [];
 
-function initMap() {
-    const mapField = document.getElementById('map-field');
-    const currentCityId = player.cityId;
-    const routes = window.ROUTES[currentCityId] || [];
+// Логика кнопок
+backBtn.onclick = () => window.location.href = 'index.html';
+travelBtn.onclick = () => window.location.href = 'road.html';
 
-    // Определяем позиции (в процентах)
-    const positions = {
-        center: { left: '50%', top: '25%' }, // Текущий
-        left: { left: '25%', top: '55%' },   // Доступный 1
-        right: { left: '75%', top: '55%' },  // Доступный 2
-        others: [ // Маленькие группки
-            { left: '15%', top: '80%' }, { left: '30%', top: '85%' },
-            { left: '70%', top: '85%' }, { left: '85%', top: '80%' }, { left: '50%', top: '90%' }
-        ]
-    };
+// Отрисовка
+window.CITIES.forEach((city) => {
+    const div = document.createElement('div');
+    let pos, size;
 
-    // Отрисовка
-    window.CITIES.forEach((city, index) => {
-        const div = document.createElement('div');
-        let pos, size;
+    if (city.id === player.cityId) {
+        pos = { left: '50%', top: '25%' };
+        size = 'big';
+    } else if (routes.includes(city.id)) {
+        pos = routes.indexOf(city.id) === 0 ? { left: '25%', top: '55%' } : { left: '75%', top: '55%' };
+        size = 'big';
+    } else {
+        pos = { left: (15 + Math.random() * 70) + '%', top: (75 + Math.random() * 20) + '%' };
+        size = 'small';
+    }
 
-        if (city.id === currentCityId) {
-            pos = positions.center;
-            size = 'big';
-        } else if (routes.includes(city.id)) {
-            pos = routes.indexOf(city.id) === 0 ? positions.left : positions.right;
-            size = 'big';
-        } else {
-            pos = positions.others.pop() || { left: '50%', top: '95%' };
-            size = 'small';
+    div.className = `city-node ${size}`;
+    div.style.left = pos.left;
+    div.style.top = pos.top;
+    div.innerHTML = `<span>${city.icon}</span><label>${city.name}</label>`;
+
+    div.onclick = () => {
+        if (routes.includes(city.id)) {
+            document.querySelectorAll('.city-node').forEach(n => n.classList.remove('selected'));
+            div.classList.add('selected');
+            travelBtn.disabled = false;
+            localStorage.setItem('targetCityId', city.id);
         }
-
-        div.className = `city-node ${size}`;
-        div.style.left = pos.left;
-        div.style.top = pos.top;
-        div.innerHTML = `<span>${city.icon}</span><label>${city.name}</label>`;
-
-        div.onclick = () => {
-            if (routes.includes(city.id)) {
-                selectedCityId = city.id;
-                document.querySelectorAll('.city-node').forEach(n => n.classList.remove('selected'));
-                div.classList.add('selected');
-                document.getElementById('travel-btn').disabled = false;
-            }
-        };
-        mapField.appendChild(div);
-    });
-}
-initMap();
+    };
+    mapField.appendChild(div);
+});
