@@ -2,7 +2,7 @@
   position: relative;
   width: 100%;
   aspect-ratio: 1/1;
-  background: #dcc8a4; /* Можно заменить на background-image: url(...) */
+  background: #dcc8a4;
   border: 1px solid var(--panel-border);
   border-radius: 12px;
   overflow: hidden;
@@ -11,15 +11,14 @@
 
 .city-node {
   position: absolute;
-  transform: translate(-50%, -50%);
-  cursor: pointer;
+  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   text-align: center;
-  transition: all 0.3s;
 }
 
-.city-node span { font-size: 24px; display: block; }
-.city-node label { font-family: var(--font-title); font-size: 12px; color: #4a3421; font-weight: bold; }
+/* Размеры */
+.city-node.big { transform: translate(-50%, -50%) scale(1.5); }
+.city-node.small { transform: translate(-50%, -50%) scale(0.6); opacity: 0.7; }
 
-/* Подсветка */
-.city-node.current span { filter: drop-shadow(0 0 8px var(--gold)); color: var(--gold); }
-.city-node.selected span { filter: drop-shadow(0 0 8px red); color: red; }
+/* Текст */
+.city-node span { display: block; font-size: 24px; }
+.city-node label { font-family: var(--font-title); font-size: 12px; font-weight: bold; color: #4a3421; }
