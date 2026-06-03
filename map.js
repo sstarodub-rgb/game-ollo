@@ -5,18 +5,19 @@ function initMap() {
     const mapField = document.getElementById('map-field');
     const travelBtn = document.getElementById('travel-btn');
 
-    // Отрисовка городов
     window.CITIES.forEach(city => {
         const div = document.createElement('div');
         div.className = `city-node ${city.id === player.cityId ? 'current' : ''}`;
-        // Масштабируем координаты (ваши значения до 900-1000)
+        
+        // Масштабируем координаты (ваши 0-1000 превращаем в 0-100%)
         div.style.left = (city.x / 10) + '%';
         div.style.top = (city.y / 10) + '%';
         
         div.innerHTML = `<span>${city.icon}</span><label>${city.name}</label>`;
         
         div.onclick = () => {
-            if (window.ROUTES[player.cityId].includes(city.id)) {
+            // Проверка доступности через ROUTES
+            if (window.ROUTES[player.cityId] && window.ROUTES[player.cityId].includes(city.id)) {
                 selectedCityId = city.id;
                 document.querySelectorAll('.city-node').forEach(n => n.classList.remove('selected'));
                 div.classList.add('selected');
