@@ -4,25 +4,26 @@ const travelBtn = document.getElementById('travel-btn');
 const backBtn = document.getElementById('back-to-city-btn');
 const routes = window.ROUTES[player.cityId] || [];
 
-backBtn.addEventListener('click', () => { window.location.href = 'index.html'; });
-travelBtn.addEventListener('click', () => { window.location.href = 'road.html'; });
+// РЕДАКТИРУЙТЕ ЭТИ ЗНАЧЕНИЯ ДЛЯ ПОЗИЦИОНИРОВАНИЯ
+const POSITIONS = {
+    "oak-holl": { left: '50%', top: '25%' },
+    "riverwood": { left: '30%', top: '55%' },
+    "dustmire": { left: '70%', top: '55%' },
+    "stonegate": { left: '20%', top: '80%' },
+    "goldport": { left: '40%', top: '80%' },
+    "suncrest": { left: '60%', top: '80%' },
+    "ironpeak": { left: '80%', top: '80%' }
+};
+
+backBtn.addEventListener('click', () => window.location.href = 'index.html');
+travelBtn.addEventListener('click', () => window.location.href = 'road.html');
 
 window.CITIES.forEach((city) => {
     const div = document.createElement('div');
-    let pos, size;
+    const pos = POSITIONS[city.id] || { left: '50%', top: '50%' };
+    const isBig = city.id === player.cityId || routes.includes(city.id);
 
-    if (city.id === player.cityId) {
-        pos = { left: '50%', top: '25%' };
-        size = 'big';
-    } else if (routes.includes(city.id)) {
-        pos = routes.indexOf(city.id) === 0 ? { left: '30%', top: '55%' } : { left: '70%', top: '55%' };
-        size = 'big';
-    } else {
-        pos = { left: (20 + Math.random() * 60) + '%', top: (75 + Math.random() * 15) + '%' };
-        size = 'small';
-    }
-
-    div.className = `city-node ${size}`;
+    div.className = `city-node ${isBig ? 'big' : 'small'}`;
     div.style.left = pos.left;
     div.style.top = pos.top;
     div.innerHTML = `<span>${city.icon}</span><label>${city.name}</label>`;
@@ -35,6 +36,5 @@ window.CITIES.forEach((city) => {
             localStorage.setItem('targetCityId', city.id);
         }
     });
-
     mapField.appendChild(div);
 });
