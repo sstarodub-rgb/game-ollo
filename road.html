@@ -1,21 +1,11 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-  <meta charset="UTF-8">
-  <link rel="stylesheet" href="road.css">
-</head>
-<body>
-  <div id="road-screen">
-    <div id="status-text">Путешествие началось...</div>
-    
+<main id="road-screen">
+  <div class="travel-box">
+    <p>Путешествие началось...</p>
     <div class="map-container">
-      <svg viewBox="0 0 100 100" class="road-svg">
-        <path id="road-path" d="M 10 50 Q 50 10 90 50" />
+      <svg class="road-svg" viewBox="0 0 100 100">
+        <path id="road-path" d="M 10 80 Q 50 20 90 80" />
       </svg>
       <div id="wagon">🛒</div>
     </div>
   </div>
-  <script src="cities.js"></script>
-  <script src="road.js"></script>
-</body>
-</html>
+</main>
