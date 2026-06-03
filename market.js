@@ -1,3 +1,4 @@
+alert("js loaded");
 // market.js
 document.addEventListener('DOMContentLoaded', () => {
     const player = JSON.parse(localStorage.getItem("merchantGame") || "{}");
@@ -41,3 +42,4 @@ document.addEventListener('DOMContentLoaded', () => {
 function closeModal() {
     document.getElementById('market-modal').style.display = 'none';
 }
+alert("end js market");
