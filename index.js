@@ -76,13 +76,14 @@ function renderCity(player) {
         <div class="location-icon">
           ${city.icon}
         </div>
-
+        <div>
         <h2 class="city-name">
           ${city.name}
         </h2>
 
         <div class="city-type">
           ${city.type}
+        </div>
         </div>
       </div>
 
