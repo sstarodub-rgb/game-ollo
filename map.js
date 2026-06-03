@@ -4,18 +4,9 @@ const travelBtn = document.getElementById('travel-btn');
 const backBtn = document.getElementById('back-to-city-btn');
 const routes = window.ROUTES[player.cityId] || [];
 
-// Обработчики кнопок
-backBtn.addEventListener('click', () => {
-    window.location.href = 'index.html';
-});
+backBtn.addEventListener('click', () => { window.location.href = 'index.html'; });
+travelBtn.addEventListener('click', () => { window.location.href = 'road.html'; });
 
-travelBtn.addEventListener('click', () => {
-    if (!travelBtn.disabled) {
-        window.location.href = 'road.html';
-    }
-});
-
-// Отрисовка городов
 window.CITIES.forEach((city) => {
     const div = document.createElement('div');
     let pos, size;
@@ -24,10 +15,10 @@ window.CITIES.forEach((city) => {
         pos = { left: '50%', top: '25%' };
         size = 'big';
     } else if (routes.includes(city.id)) {
-        pos = routes.indexOf(city.id) === 0 ? { left: '25%', top: '55%' } : { left: '75%', top: '55%' };
+        pos = routes.indexOf(city.id) === 0 ? { left: '30%', top: '55%' } : { left: '70%', top: '55%' };
         size = 'big';
     } else {
-        pos = { left: (15 + Math.random() * 70) + '%', top: (75 + Math.random() * 20) + '%' };
+        pos = { left: (20 + Math.random() * 60) + '%', top: (75 + Math.random() * 15) + '%' };
         size = 'small';
     }
 
