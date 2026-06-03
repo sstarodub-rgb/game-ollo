@@ -101,36 +101,6 @@ function renderCity(player) {
 }
 
 /* -------------------------
-   ACTIONS
-------------------------- */
-
-function renderActions() {
-  const container = document.getElementById("actions-container");
-
-  if (!container) return;
-
-  container.innerHTML = `
-    <section class="actions-panel">
-      <button id="market-button">Рынок</button>
-      <button id="stable-button">Конюх</button>
-      <button id="map-button">Карта</button>
-    </section>
-  `;
-
-  document.getElementById("market-button").onclick = () => {
-    window.location.href = "./market.html";
-  };
-
-  document.getElementById("stable-button").onclick = () => {
-    window.location.href = "./stable.html";
-  };
-
-  document.getElementById("map-button").onclick = () => {
-    window.location.href = "./map.html";
-  };
-}
-
-/* -------------------------
    LOG
 ------------------------- */
 
