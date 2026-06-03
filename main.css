@@ -50,7 +50,6 @@ body {
 ------------------------- */
 
 .city-card {
-  position: relative;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -87,7 +86,7 @@ body {
   line-height: 1.1;
 }
 
-/* первая буква как “фэнтези инициала” */
+/* первая буква */
 .city-name-first {
   font-size: 30px;
   color: var(--gold);
@@ -95,7 +94,6 @@ body {
   text-shadow: 0 0 6px rgba(200, 155, 60, 0.4);
 }
 
-/* тип города */
 .city-type {
   font-size: 14px;
   color: var(--text-muted);
@@ -113,13 +111,16 @@ body {
   border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-/* ---------------- COORDS ---------------- */
+/* ---------------- FOOTER (COORDS) ---------------- */
+
+.city-footer {
+  display: flex;
+  justify-content: flex-end; /* вправо */
+  align-items: flex-end;     /* вниз визуально */
+  margin-top: 6px;
+}
 
 .city-coordinates {
-  position: absolute;
-  right: 10px;
-  bottom: 10px;
-
   font-size: 13px;
   color: var(--text-muted);
   opacity: 0.8;
