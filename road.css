@@ -1,21 +1,33 @@
-#road-screen { display: flex; justify-content: center; align-items: center; height: 100vh; background: #f4e4bc; }
-.travel-box { width: 90%; max-width: 400px; text-align: center; }
+#road-screen { 
+  display: flex; justify-content: center; align-items: center; 
+  height: 100vh; background: #2c2420; /* Темный фон для контраста */
+}
 
-.map-container { position: relative; width: 100%; height: 200px; border: 2px solid #8b5a2b; background: #dcc8a4; border-radius: 10px; }
+.travel-card { 
+  background: #dcc8a4; padding: 20px; border-radius: 15px;
+  width: 90%; max-width: 400px; text-align: center;
+  border: 3px solid #6f5632; box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+}
+
+.map-container { 
+  position: relative; width: 100%; height: 150px; 
+  background: #e8d5b5; border-radius: 10px; margin: 20px 0;
+  overflow: hidden;
+}
 
 .road-svg { width: 100%; height: 100%; }
-#road-path { fill: none; stroke: #8b5a2b; stroke-width: 4; stroke-dasharray: 8; }
+#road-path { fill: none; stroke: #6f5632; stroke-width: 4; stroke-dasharray: 8; }
 
-#wagon {
-  position: absolute;
-  top: 0; left: 0;
-  font-size: 30px;
-  /* Путь точно такой же, как в SVG */
-  offset-path: path('M 10 80 Q 50 20 90 80');
+#wagon { 
+  position: absolute; font-size: 30px; 
+  offset-path: path('M 5 80 Q 50 20 95 80');
   animation: moveWagon 8s linear forwards;
 }
 
 @keyframes moveWagon {
-  0% { offset-distance: 0%; }
-  100% { offset-distance: 100%; }
+  0% { offset-distance: 0%; transform: rotate(10deg); }
+  50% { transform: rotate(-10deg); }
+  100% { offset-distance: 100%; transform: rotate(10deg); }
 }
+
+.hint { font-family: sans-serif; color: #6f5632; font-style: italic; }
