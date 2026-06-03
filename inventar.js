@@ -1,16 +1,15 @@
-const player = JSON.parse(localStorage.getItem("merchantGame"));
-
 function initInventar() {
+    const player = JSON.parse(localStorage.getItem("merchantGame"));
     if (!player) return;
 
     document.getElementById('back-to-city-btn').addEventListener('click', () => {
         window.location.href = 'index.html';
     });
 
-    renderInventory();
+    renderInventory(player);
 }
 
-function renderInventory() {
+function renderInventory(player) {
     const tbody = document.getElementById('inventory-tbody');
     tbody.innerHTML = '';
 
@@ -27,7 +26,7 @@ function renderInventory() {
 
         const row = document.createElement('tr');
         row.innerHTML = `
-            <td class="good-icon" style="font-size: 24px; width: 40px;">${good.icon}</td>
+            <td style="font-size: 24px; width: 40px;">${good.icon}</td>
             <td><strong>${good.name}</strong><br><small style="color: var(--text-muted);">${good.categoryName}</small></td>
             <td class="text-center">${item.quantity}</td>
             <td class="text-center">${item.quantity * good.weight}</td>
