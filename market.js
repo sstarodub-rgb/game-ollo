@@ -44,27 +44,28 @@ function initMarketPage() {
 }
 
 /**
- * Рассчитывает цену с учетом города:
- * - Если город продает товар, цена покупки для игрока ниже (-10%)
- * - Если город нуждается в товаре, цена продажи для игрока выше (+15%)
+ * Расчет цен:
+ * - Игрок покупает (type: 'buy'): город продает товар (city.market.sell). Цена ниже, если товар в наличии.
+ * - Игрок продает (type: 'sell'): город покупает товар (city.market.buy). Цена выше, если товар востребован.
  */
 function getCurrentPrice(good, type, city) {
     const base = good.basePrice || 10;
     const random = 0.9 + Math.random() * 0.2;
     let price = base * random;
 
-    // Модификаторы города
-    if (type === 'buy' && city?.market?.buy?.includes(good.id)) {
-        price *= 0.9; // Город специализируется на продаже — цена для нас приятнее
+    // Игрок покупает -> смотрим, что город продает
+    if (type === 'buy' && city?.market?.sell?.includes(good.id)) {
+        price *= 0.9; 
     }
 
-    if (type === 'sell' && city?.market?.sell?.includes(good.id)) {
-        price *= 1.15; // Город нуждается в товаре — платит нам больше
+    // Игрок продает -> смотрим, что город покупает
+    if (type === 'sell' && city?.market?.buy?.includes(good.id)) {
+        price *= 1.15;
     }
 
     price = Math.round(price);
     
-    // Для продажи игроком применяем базовый дисконт рынка
+    // При продаже игроком применяем базовый дисконт рынка
     return type === 'sell' ? Math.round(price * 0.8) : price;
 }
 
@@ -75,8 +76,10 @@ function renderMarketTable(city) {
     const inventoryMap = new Map((player.inventory || []).map(i => [i.goodId, i.quantity]));
 
     window.GOODS.forEach(good => {
-        const canBuy = city?.market?.buy?.includes(good.id) || false;
-        const canSell = city?.market?.sell?.includes(good.id) || false;
+        // canBuy: город продает, значит игрок может купить
+        // canSell: город покупает, значит игрок может продать
+        const canBuy = city?.market?.sell?.includes(good.id) || false;
+        const canSell = city?.market?.buy?.includes(good.id) || false;
 
         if (!canBuy && !canSell) return;
 
