@@ -31,7 +31,6 @@ function resetStorage() {
 function renderResetHeader() {
   const header = document.createElement("header");
   header.id = "game-header";
-
   header.innerHTML = `
     <div class="header-reset">
       <button id="reset-storage-btn" class="header-delete-btn">
@@ -39,18 +38,13 @@ function renderResetHeader() {
       </button>
     </div>
   `;
-
   document.body.prepend(header);
-
-  document
-    .getElementById("reset-storage-btn")
-    .addEventListener("click", resetStorage);
+  document.getElementById("reset-storage-btn").addEventListener("click", resetStorage);
 }
 
 function renderPlayerHeader(player) {
   const header = document.createElement("header");
   header.id = "game-header";
-
   header.innerHTML = `
     <div class="header-info">
       <span>👤 ${player.name}</span>
@@ -59,18 +53,28 @@ function renderPlayerHeader(player) {
       <span>⚖ ${player.weight}/${player.transport.capacity}</span>
     </div>
   `;
-
   document.body.prepend(header);
+}
+
+// Функция для обновления хедера при изменении данных игрока
+function updateHeaderInfo(player) {
+  const infoEl = document.querySelector(".header-info");
+  if (infoEl) {
+    infoEl.innerHTML = `
+      <span>👤 ${player.name}</span>
+      <span>💰 ${player.gold}</span>
+      <span>🐴 ${player.transport.name}</span>
+      <span>⚖ ${player.weight}/${player.transport.capacity}</span>
+    `;
+  }
 }
 
 function renderHeader() {
   const player = getPlayer();
-
   if (!isValidPlayer(player)) {
     renderResetHeader();
     return;
   }
-
   renderPlayerHeader(player);
 }
 
