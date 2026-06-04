@@ -1,81 +1,53 @@
-let player = null;
-
-document.addEventListener("DOMContentLoaded", init);
-
-function init() {
+document.addEventListener("DOMContentLoaded", () => {
   setupBackButton();
-  loadPlayer();
-
-  if (!player) {
-    renderEmptyState();
-    return;
-  }
-
   renderTransports();
-}
+});
 
 function setupBackButton() {
   const btn = document.getElementById("back-to-city-btn");
-
-  if (!btn) return;
-
-  btn.addEventListener("click", () => {
-    window.location.href = "./index.html";
-  });
-}
-
-function loadPlayer() {
-  try {
-    const data = localStorage.getItem("merchantGame");
-
-    if (!data) {
-      player = null;
-      return;
-    }
-
-    player = JSON.parse(data);
-
-    // защита от кривого state
-    if (!player || typeof player !== "object") {
-      player = null;
-    }
-
-  } catch (e) {
-    console.error("Player load error:", e);
-    player = null;
+  if (btn) {
+    btn.addEventListener("click", () => {
+      window.location.href = "./index.html";
+    });
   }
 }
 
-function savePlayer() {
-  localStorage.setItem("merchantGame", JSON.stringify(player));
+function getPlayer() {
+  const data = localStorage.getItem("merchantGame");
+  if (!data) return null;
+  try {
+    return JSON.parse(data);
+  } catch (e) {
+    return null;
+  }
 }
 
-function renderEmptyState() {
-  const container = document.getElementById("transport-list");
-
-  if (!container) return;
-
-  container.innerHTML = `
-    <div style="padding:10px; color: #c89b3c;">
-      Нет игрока. Создай персонажа в главном меню.
-    </div>
-  `;
+function savePlayer(player) {
+  localStorage.setItem("merchantGame", JSON.stringify(player));
 }
 
 function renderTransports() {
   const container = document.getElementById("transport-list");
-
   if (!container) return;
 
-  container.innerHTML = "";
-
-  if (!window.TRANSPORTS || !Array.isArray(TRANSPORTS)) {
-    container.innerHTML = "<div>TRANSPORTS не загружен</div>";
+  const player = getPlayer();
+  if (!player) {
+    container.innerHTML = `<div style="padding:10px; color:#c89b3c;">Сначала создайте персонажа в меню игры.</div>`;
     return;
   }
 
-  TRANSPORTS.forEach(t => {
-    const isOwned = player?.transport?.id === t.id;
+  // Гарантируем, что золото существует
+  if (player.gold === undefined) player.gold = 0;
+
+  container.innerHTML = "";
+
+  if (typeof window.TRANSPORTS === "undefined") {
+    container.innerHTML = "<div>Ошибка: список транспорта не загружен.</div>";
+    return;
+  }
+
+  window.TRANSPORTS.forEach(t => {
+    const isOwned = player.transport && player.transport.id === t.id;
     const canBuy = player.gold >= t.price;
 
     const card = document.createElement("div");
@@ -85,32 +57,34 @@ function renderTransports() {
       <h3>${t.name}</h3>
       <p>⚖️ Вместимость: ${t.capacity}</p>
       <p>🚀 Скорость: ${t.speed}</p>
-      <p>💰 Цена: ${t.price}</p>
+      <p>💰 Цена: ${t.price > 0 ? t.price : "Бесплатно"}</p>
       <p>${t.description}</p>
-
-      <button ${isOwned ? "disabled" : ""}>
-        ${isOwned ? "Используется" : canBuy ? "Купить / выбрать" : "Нет денег"}
+      <button class="buy-btn" ${isOwned ? "disabled" : ""}>
+        ${isOwned ? "Используется" : (canBuy ? "Купить / Выбрать" : "Недостаточно золота")}
       </button>
     `;
 
-    card.querySelector("button").addEventListener("click", () => {
-      buyTransport(t);
-    });
+    if (!isOwned) {
+      card.querySelector(".buy-btn").addEventListener("click", () => {
+        buyTransport(t);
+      });
+    }
 
     container.appendChild(card);
   });
 }
 
 function buyTransport(t) {
+  let player = getPlayer();
   if (!player) return;
 
   if (player.gold < t.price) {
-    alert("Недостаточно золота");
+    alert("Недостаточно золота!");
     return;
   }
 
+  // Вычитаем цену и меняем транспорт
   player.gold -= t.price;
-
   player.transport = {
     id: t.id,
     name: t.name,
@@ -118,6 +92,7 @@ function buyTransport(t) {
     speed: t.speed
   };
 
-  savePlayer();
-  renderTransports();
+  savePlayer(player);
+  alert(`Вы приобрели ${t.name}!`);
+  renderTransports(); // Обновляем список на экране
 }
