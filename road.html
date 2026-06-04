@@ -16,9 +16,10 @@
         <svg class="road-svg" viewBox="0 0 100 100" preserveAspectRatio="none">
           <path id="road-path" d="M 95 80 Q 50 20 5 80" fill="none" stroke="#6f5632" stroke-width="2" stroke-dasharray="4" />
           
-          <g id="airship">
-            <ellipse cx="0" cy="0" rx="12" ry="6" fill="#d2691e" />
-            <rect x="-4" y="4" width="8" height="6" fill="#8b4513" />
+          <g id="character">
+            <polygon points="0,-4 4,4 -4,4" fill="#6f5632" />
+            <circle id="head" cx="0" cy="-7" r="2" fill="#6f5632" />
+            
             <animateMotion dur="8s" repeatCount="1" fill="freeze">
               <mpath xlink:href="#road-path" />
             </animateMotion>
