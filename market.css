@@ -1,11 +1,12 @@
 /* market.css */
+
 .market-page {
     padding: 15px;
     max-width: 1000px;
     margin: 0 auto;
 }
 
-/* Таблица */
+/* --- Таблица рынка --- */
 .market-table {
     width: 100%;
     border-collapse: collapse;
@@ -30,13 +31,23 @@
     width: 60px;
     text-align: center;
 }
+
+.fantasy-btn {
+    padding: 6px 12px;
+    cursor: pointer;
+    font-family: var(--font-title);
+    background: #3a2a22;
+    color: #e0c8a0;
+    border: 1px solid var(--panel-border);
+}
+
 .fantasy-btn:disabled {
     opacity: 0.5;
     cursor: not-allowed;
     filter: grayscale(1);
 }
 
-/* Модальное окно */
+/* --- Модальное окно --- */
 .market-modal {
     display: none;
     position: fixed;
@@ -55,8 +66,44 @@
     border-radius: 12px;
     width: 90%;
     max-width: 440px;
+    text-align: center;
 }
 
+.market-quantity {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.qty-btn {
+    width: 40px; height: 40px; font-size: 24px;
+    background: #3a2a22; color: #f5e6c8;
+    border: 2px solid var(--panel-border);
+    cursor: pointer;
+}
+
+/* Кнопка MAX */
+.qty-btn-max {
+    width: 60px; height: 40px; 
+    font-size: 14px;
+    background: #b8860b; color: #fff;
+    border: 2px solid var(--panel-border);
+    cursor: pointer;
+    font-weight: bold;
+    font-family: var(--font-title);
+}
+
+.qty-btn-max:hover { background: #d4a017; }
+
+.qty-value {
+    font-size: 20px;
+    font-weight: bold;
+    min-width: 50px;
+}
+
+/* Кнопки действий */
 .modal-btn {
     padding: 12px 24px;
     font-size: 20px;
@@ -78,10 +125,8 @@
     margin-top: 20px;
 }
 
+/* Утилиты */
 .highlight { color: var(--gold); font-weight: bold; }
 .text-center { text-align: center; }
-.qty-btn {
-    width: 40px; height: 40px; font-size: 24px;
-    background: #3a2a22; color: #f5e6c8;
-    border: 2px solid var(--panel-border);
-}
+.modal-price-info { margin: 15px 0; line-height: 1.6; }
+.modal-good-name { font-size: 1.5em; font-family: var(--font-title); margin-bottom: 10px; }
