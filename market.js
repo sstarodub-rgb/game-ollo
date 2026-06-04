@@ -77,11 +77,11 @@ function renderMarketTable(city) {
 
         const buyPrice = canBuy ? marketPrices[good.id].buy : null;
         const sellPrice = canSell ? marketPrices[good.id].sell : null;
-        const inStock = inventoryMap.get(good.id) || 0;
 
         const row = document.createElement('tr');
         row.innerHTML = `
-            <td>${good.icon || '📦'} <strong>${good.name}</strong></td>
+            <td class="good-icon">${good.icon || '📦'}</td>
+            <td><strong>${good.name}</strong></td>
             <td class="text-center">
                 ${canBuy ? `<button class="fantasy-btn" data-id="${good.id}" data-mode="buy">${buyPrice} 💰</button>` : '-'}
             </td>
@@ -104,6 +104,7 @@ function setupModal() {
     document.getElementById('modal-confirm').addEventListener('click', confirmTrade);
     document.getElementById('qty-plus').addEventListener('click', () => changeQuantity(1));
     document.getElementById('qty-minus').addEventListener('click', () => changeQuantity(-1));
+    document.getElementById('qty-max').addEventListener('click', setMaxQuantity);
 }
 
 function openTradeModal(goodId, mode, city) {
@@ -116,7 +117,7 @@ function openTradeModal(goodId, mode, city) {
     const limits = getLimits(currentPrice);
     const inventoryQty = player.inventory?.find(i => i.goodId == goodId)?.quantity || 0;
     
-    // Максимум для продажи не может превышать то, что есть в наличии
+    // Показываем доступное (для продажи лимит или остаток)
     const available = mode === 'buy' ? limits.max : Math.min(inventoryQty, limits.max);
 
     document.getElementById('modal-title').textContent = mode === 'buy' ? 'Покупка' : 'Продажа';
@@ -141,6 +142,25 @@ function changeQuantity(delta) {
     updateTotalPrice();
 }
 
+function setMaxQuantity() {
+    const limits = getLimits(currentPrice);
+    let maxQty = limits.max;
+
+    if (currentMode === 'buy') {
+        const canAfford = Math.floor(player.gold / currentPrice);
+        const capacityLeft = (player.transport?.capacity || 100) - (player.weight || 0);
+        const canCarry = Math.floor(capacityLeft / currentGood.weight);
+        maxQty = Math.min(limits.max, canAfford, canCarry);
+    } else {
+        const inventoryItem = player.inventory?.find(i => i.goodId == currentGood.id);
+        const invQty = inventoryItem ? inventoryItem.quantity : 0;
+        maxQty = Math.min(limits.max, invQty);
+    }
+
+    document.getElementById('qty-value').textContent = Math.max(limits.min, maxQty);
+    updateTotalPrice();
+}
+
 function updateTotalPrice() {
     const qty = parseInt(document.getElementById('qty-value').textContent);
     document.getElementById('modal-total').innerHTML = `Итого: <span class="highlight">${qty * currentPrice}</span> монет`;
@@ -151,7 +171,6 @@ function confirmTrade() {
     const qty = parseInt(document.getElementById('qty-value').textContent);
     const limits = getLimits(currentPrice);
 
-    // Защитная проверка лимитов
     if (qty < limits.min || qty > limits.max) return alert("Недопустимое количество!");
 
     if (currentMode === 'buy') {
