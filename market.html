@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Рынок — Хроники Торговца</title>
-
     <link rel="stylesheet" href="./main.css">
     <link rel="stylesheet" href="./header.css">
     <link rel="stylesheet" href="./market.css">
@@ -12,18 +11,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-
     <header id="game-header">
         <div class="stable-header">
-            <button id="back-to-city-btn" class="header-back-btn">
-                ← Назад в город
-            </button>
+            <button id="back-to-city-btn" class="header-back-btn">← Назад в город</button>
             <div class="stable-title">Рынок</div>
         </div>
     </header>
 
     <div id="market-page" class="market-page">
-
         <section id="market-list" class="market-list">
             <table id="market-table" class="market-table">
                 <thead>
@@ -37,27 +32,23 @@
                 <tbody id="market-tbody"></tbody>
             </table>
         </section>
-
     </div>
 
     <div id="market-modal" class="market-modal">
         <div class="market-modal-content">
             <h2 id="modal-title">Сделка</h2>
             <div id="modal-good-name" class="modal-good-name"></div>
-
             <div class="modal-price-info">
                 <div>Цена: <span id="modal-price" class="highlight"></span> монет</div>
                 <div>В наличии: <span id="modal-available"></span></div>
             </div>
-
             <div class="market-quantity">
                 <button id="qty-minus" class="qty-btn">−</button>
                 <span id="qty-value" class="qty-value">1</span>
                 <button id="qty-plus" class="qty-btn">+</button>
+                <button id="qty-max" class="qty-btn-max">MAX</button>
             </div>
-
             <div id="modal-total" class="modal-total">Итого: <span class="highlight">0</span> монет</div>
-
             <div class="market-modal-actions">
                 <button id="modal-cancel" class="modal-btn modal-btn-cancel">Отмена</button>
                 <button id="modal-confirm" class="modal-btn modal-btn-confirm">Подтвердить</button>
@@ -68,7 +59,6 @@
     <script src="./cities.js"></script>
     <script src="./goods.js"></script>
     <script src="./transports.js"></script>
-
     <script src="./header.js"></script>
     <script src="./market.js"></script>
 </body>
