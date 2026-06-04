@@ -34,15 +34,16 @@
 #road-path { 
   fill: none; 
   stroke: #6f5632; 
-  stroke-width: 4; 
-  stroke-dasharray: 6; 
+  stroke-width: 2; 
+  stroke-dasharray: 4; 
 }
 
-#wagon { 
-  font-size: 35px; /* Исходный размер для эмодзи */
-  /* Отразим эмодзи горизонтально, чтобы он смотрел влево */
+#airship {
+  /* Отражаем, чтобы смотрел влево */
   transform: scaleX(-1);
-  /* transform-origin: center center; */ /* Может быть не нужно для animateMotion, но для scaleX(-1) может помочь */
+  /* Центрируем трансформацию */
+  transform-box: fill-box;
+  transform-origin: center;
 }
 
 .hint { 
