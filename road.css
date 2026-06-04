@@ -39,21 +39,7 @@
 }
 
 #wagon { 
-  position: absolute; 
-  font-size: 35px; 
-  z-index: 10;
-  /* Начальная точка */
-  left: 0%; 
-  top: 50%; 
-  animation: moveWagon 8s linear forwards;
-}
-
-@keyframes moveWagon {
-  0%   { left: 0%;   top: 60%; }
-  25%  { left: 25%;  top: 30%; }
-  50%  { left: 50%;  top: 15%; }
-  75%  { left: 75%;  top: 30%; }
-  100% { left: 90%;  top: 60%; }
+  font-size: 15px; /* Настройка размера эмодзи в рамках viewBox */
 }
 
 .hint { 
