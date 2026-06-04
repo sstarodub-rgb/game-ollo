@@ -1,54 +1,34 @@
 #road-screen { 
-  display: flex; 
-  justify-content: center; 
-  align-items: center; 
-  height: 100vh; 
-  background: #2c2420; 
-  margin: 0;
+  display: flex; justify-content: center; align-items: center; 
+  height: 100vh; background: #2c2420; margin: 0;
 }
 
 .travel-card { 
-  background: #dcc8a4; 
-  padding: 25px; 
-  border-radius: 15px;
-  width: 85%; 
-  max-width: 400px; 
-  text-align: center;
-  border: 4px solid #6f5632; 
-  box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+  background: #dcc8a4; padding: 25px; border-radius: 15px;
+  width: 85%; max-width: 400px; text-align: center;
+  border: 4px solid #6f5632; box-shadow: 0 10px 30px rgba(0,0,0,0.6);
 }
 
 .map-container { 
-  position: relative; 
-  width: 100%; 
-  height: 150px; 
-  background: #e8d5b5; 
-  border: 2px solid #6f5632;
-  border-radius: 10px; 
-  margin: 20px 0;
-  overflow: hidden;
+  position: relative; width: 100%; height: 150px; 
+  background: #e8d5b5; border: 2px solid #6f5632;
+  border-radius: 10px; margin: 20px 0; overflow: hidden;
 }
 
 .road-svg { width: 100%; height: 100%; }
 
-#road-path { 
-  fill: none; 
-  stroke: #6f5632; 
-  stroke-width: 2; 
-  stroke-dasharray: 4; 
+#road-path { fill: none; stroke: #6f5632; stroke-width: 2; stroke-dasharray: 4; }
+
+/* Анимация головы */
+#head {
+  animation: bobbing 0.5s infinite alternate ease-in-out;
 }
 
-#airship {
-  /* Отражаем, чтобы смотрел влево */
-  transform: scaleX(-1);
-  /* Центрируем трансформацию */
-  transform-box: fill-box;
-  transform-origin: center;
+@keyframes bobbing {
+  from { transform: translateY(0px); }
+  to { transform: translateY(-1px); }
 }
 
 .hint { 
-  font-family: sans-serif; 
-  color: #6f5632; 
-  font-weight: bold; 
-  margin-top: 10px; 
+  font-family: sans-serif; color: #6f5632; font-weight: bold; margin-top: 10px; 
 }
