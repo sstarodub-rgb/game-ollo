@@ -21,12 +21,12 @@ function savePlayer(player) {
 }
 
 /**
- * Логика лимитов согласно ТЗ
+ * Возвращает максимальный лимит товара на рынке согласно ТЗ
  */
 function getLimits(price) {
-    if (price > 400) return { min: 2, max: 5 };
-    if (price > 100) return { min: 5, max: 12 };
-    return { min: 20, max: 50 };
+    if (price > 400) return 5;
+    if (price > 100) return 12;
+    return 50;
 }
 
 function initMarketPage() {
@@ -68,8 +68,6 @@ function renderMarketTable(city) {
     const tbody = document.getElementById('market-tbody');
     tbody.innerHTML = '';
 
-    const inventoryMap = new Map((player.inventory || []).map(i => [i.goodId, i.quantity]));
-
     window.GOODS.forEach(good => {
         const canBuy = city?.market?.buy?.includes(good.id) || false;
         const canSell = city?.market?.sell?.includes(good.id) || false;
@@ -94,7 +92,7 @@ function renderMarketTable(city) {
 
     document.querySelectorAll('.fantasy-btn').forEach(btn => {
         btn.addEventListener('click', function () {
-            openTradeModal(this.dataset.id, this.dataset.mode, city);
+            openTradeModal(this.dataset.id, this.dataset.mode);
         });
     });
 }
@@ -107,24 +105,25 @@ function setupModal() {
     document.getElementById('qty-max').addEventListener('click', setMaxQuantity);
 }
 
-function openTradeModal(goodId, mode, city) {
+function openTradeModal(goodId, mode) {
     currentGood = window.GOODS.find(g => String(g.id) === String(goodId));
     if (!currentGood) return;
 
     currentMode = mode;
     currentPrice = marketPrices[goodId][mode];
 
-    const limits = getLimits(currentPrice);
-    const inventoryQty = player.inventory?.find(i => i.goodId == goodId)?.quantity || 0;
+    const maxStock = getLimits(currentPrice);
+    const inventoryItem = player.inventory?.find(i => i.goodId == goodId);
+    const invQty = inventoryItem ? inventoryItem.quantity : 0;
     
-    // Показываем доступное (для продажи лимит или остаток)
-    const available = mode === 'buy' ? limits.max : Math.min(inventoryQty, limits.max);
+    // Максимум доступный для сделки
+    const available = mode === 'buy' ? maxStock : Math.min(invQty, maxStock);
 
     document.getElementById('modal-title').textContent = mode === 'buy' ? 'Покупка' : 'Продажа';
     document.getElementById('modal-good-name').textContent = currentGood.name;
     document.getElementById('modal-price').textContent = currentPrice;
     document.getElementById('modal-available').textContent = available;
-    document.getElementById('qty-value').textContent = limits.min;
+    document.getElementById('qty-value').textContent = 1;
 
     updateTotalPrice();
     document.getElementById('market-modal').style.display = 'flex';
@@ -134,30 +133,36 @@ function closeModal() { document.getElementById('market-modal').style.display = 
 
 function changeQuantity(delta) {
     const qtyElement = document.getElementById('qty-value');
-    const limits = getLimits(currentPrice);
-    let qty = parseInt(qtyElement.textContent) + delta;
+    const maxStock = getLimits(currentPrice);
+    const inventoryItem = player.inventory?.find(i => i.goodId == currentGood.id);
+    const invQty = inventoryItem ? inventoryItem.quantity : 0;
     
-    qty = Math.max(limits.min, Math.min(limits.max, qty));
+    // Лимит: для покупки - рынок, для продажи - инвентарь + рынок
+    const limit = currentMode === 'buy' ? maxStock : Math.min(invQty, maxStock);
+    
+    let qty = parseInt(qtyElement.textContent) + delta;
+    qty = Math.max(1, Math.min(limit, qty));
+    
     qtyElement.textContent = qty;
     updateTotalPrice();
 }
 
 function setMaxQuantity() {
-    const limits = getLimits(currentPrice);
-    let maxQty = limits.max;
+    const maxStock = getLimits(currentPrice);
+    let maxQty;
 
     if (currentMode === 'buy') {
         const canAfford = Math.floor(player.gold / currentPrice);
         const capacityLeft = (player.transport?.capacity || 100) - (player.weight || 0);
-        const canCarry = Math.floor(capacityLeft / currentGood.weight);
-        maxQty = Math.min(limits.max, canAfford, canCarry);
+        const canCarry = Math.floor(capacityLeft / (currentGood.weight || 1));
+        maxQty = Math.min(maxStock, canAfford, canCarry);
     } else {
         const inventoryItem = player.inventory?.find(i => i.goodId == currentGood.id);
         const invQty = inventoryItem ? inventoryItem.quantity : 0;
-        maxQty = Math.min(limits.max, invQty);
+        maxQty = Math.min(maxStock, invQty);
     }
 
-    document.getElementById('qty-value').textContent = Math.max(limits.min, maxQty);
+    document.getElementById('qty-value').textContent = Math.max(1, maxQty);
     updateTotalPrice();
 }
 
@@ -169,11 +174,13 @@ function updateTotalPrice() {
 function confirmTrade() {
     if (!currentGood) return;
     const qty = parseInt(document.getElementById('qty-value').textContent);
-    const limits = getLimits(currentPrice);
+    const maxStock = getLimits(currentPrice);
 
-    if (qty < limits.min || qty > limits.max) return alert("Недопустимое количество!");
-
+    // Валидация
+    if (qty < 1) return alert("Выберите количество!");
+    
     if (currentMode === 'buy') {
+        if (qty > maxStock) return alert("Такого количества нет на рынке!");
         const totalCost = qty * currentPrice;
         if (player.gold < totalCost) return alert("Недостаточно золота!");
         if ((player.weight || 0) + qty * currentGood.weight > (player.transport?.capacity || 100)) return alert("Слишком тяжело!");
@@ -185,6 +192,7 @@ function confirmTrade() {
     } else {
         const index = player.inventory.findIndex(i => i.goodId == currentGood.id);
         if (index === -1 || player.inventory[index].quantity < qty) return alert("Недостаточно товара!");
+        
         player.inventory[index].quantity -= qty;
         if (player.inventory[index].quantity <= 0) player.inventory.splice(index, 1);
         player.gold += qty * currentPrice;
@@ -194,7 +202,5 @@ function confirmTrade() {
     savePlayer(player);
     if (typeof updateHeaderInfo === 'function') updateHeaderInfo(player);
     closeModal();
-    
-    const city = window.CITIES ? window.CITIES.find(c => c.id === player.cityId) : cities.find(c => c.id === player.cityId);
-    renderMarketTable(city);
+    renderMarketTable(window.CITIES?.find(c => c.id === player.cityId) || cities.find(c => c.id === player.cityId));
 }
