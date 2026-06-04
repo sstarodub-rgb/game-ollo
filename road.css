@@ -39,7 +39,10 @@
 }
 
 #wagon { 
-  font-size: 15px; /* Настройка размера эмодзи в рамках viewBox */
+  font-size: 35px; /* Исходный размер для эмодзи */
+  /* Отразим эмодзи горизонтально, чтобы он смотрел влево */
+  transform: scaleX(-1);
+  /* transform-origin: center center; */ /* Может быть не нужно для animateMotion, но для scaleX(-1) может помочь */
 }
 
 .hint { 
