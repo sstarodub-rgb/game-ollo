@@ -14,10 +14,15 @@
       
       <div class="map-container">
         <svg class="road-svg" viewBox="0 0 100 100" preserveAspectRatio="none">
-          <path id="road-path" d="M 5 80 Q 50 20 95 80" />
+          <path id="road-path" d="M 95 80 Q 50 20 5 80" fill="none" stroke="#6f5632" stroke-width="4" stroke-dasharray="6" />
+          
+          <text id="wagon" x="0" y="0">
+            🐎
+            <animateMotion dur="8s" repeatCount="1" fill="freeze" rotate="auto">
+              <mpath xlink:href="#road-path" />
+            </animateMotion>
+          </text>
         </svg>
-        
-        <div id="wagon">🐎</div>
       </div>
       
       <p class="hint">Ожидайте прибытия в город</p>
