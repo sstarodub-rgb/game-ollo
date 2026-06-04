@@ -1,5 +1,5 @@
 const player = getPlayer();
-let marketPrices = {}; 
+let marketPrices = {};
 let currentGood = null;
 let currentMode = null;
 let currentPrice = 0;
@@ -18,6 +18,15 @@ function getPlayer() {
 
 function savePlayer(player) {
     localStorage.setItem("merchantGame", JSON.stringify(player));
+}
+
+/**
+ * Логика лимитов согласно ТЗ
+ */
+function getLimits(price) {
+    if (price > 400) return { min: 2, max: 5 };
+    if (price > 100) return { min: 5, max: 12 };
+    return { min: 20, max: 50 };
 }
 
 function initMarketPage() {
@@ -43,25 +52,13 @@ function initMarketPage() {
     setupModal();
 }
 
-/**
- * Исходная логика цен с новыми модификаторами:
- * - Если игрок покупает ('buy') и товар есть в city.market.buy — цена ниже (-10%)
- * - Если игрок продает ('sell') и товар есть в city.market.sell — цена выше (+15%)
- */
 function getCurrentPrice(good, type, city) {
     const base = good.basePrice || 10;
     const random = 0.9 + Math.random() * 0.2;
     let price = base * random;
 
-    // Игрок покупает (city.market.buy)
-    if (type === 'buy' && city?.market?.buy?.includes(good.id)) {
-        price *= 0.9; 
-    }
-
-    // Игрок продает (city.market.sell)
-    if (type === 'sell' && city?.market?.sell?.includes(good.id)) {
-        price *= 1.15;
-    }
+    if (type === 'buy' && city?.market?.buy?.includes(good.id)) price *= 0.9;
+    if (type === 'sell' && city?.market?.sell?.includes(good.id)) price *= 1.15;
 
     price = Math.round(price);
     return type === 'sell' ? Math.round(price * 0.8) : price;
@@ -76,7 +73,6 @@ function renderMarketTable(city) {
     window.GOODS.forEach(good => {
         const canBuy = city?.market?.buy?.includes(good.id) || false;
         const canSell = city?.market?.sell?.includes(good.id) || false;
-
         if (!canBuy && !canSell) return;
 
         const buyPrice = canBuy ? marketPrices[good.id].buy : null;
@@ -85,15 +81,12 @@ function renderMarketTable(city) {
 
         const row = document.createElement('tr');
         row.innerHTML = `
-            <td class="good-icon">${good.icon || '📦'}</td>
-            <td><strong>${good.name}</strong><br><small>${good.categoryName || good.category || ''}</small></td>
+            <td>${good.icon || '📦'} <strong>${good.name}</strong></td>
             <td class="text-center">
                 ${canBuy ? `<button class="fantasy-btn" data-id="${good.id}" data-mode="buy">${buyPrice} 💰</button>` : '-'}
             </td>
             <td class="text-center">
-                ${canSell 
-                    ? `<button class="fantasy-btn" data-id="${good.id}" data-mode="sell" ${inStock === 0 ? 'disabled' : ''}>${sellPrice} 💰</button>` 
-                    : '—'}
+                ${canSell ? `<button class="fantasy-btn" data-id="${good.id}" data-mode="sell">${sellPrice} 💰</button>` : '-'}
             </td>
         `;
         tbody.appendChild(row);
@@ -120,13 +113,17 @@ function openTradeModal(goodId, mode, city) {
     currentMode = mode;
     currentPrice = marketPrices[goodId][mode];
 
-    const available = mode === 'buy' ? 999 : (player.inventory?.find(i => i.goodId == goodId)?.quantity || 0);
+    const limits = getLimits(currentPrice);
+    const inventoryQty = player.inventory?.find(i => i.goodId == goodId)?.quantity || 0;
+    
+    // Максимум для продажи не может превышать то, что есть в наличии
+    const available = mode === 'buy' ? limits.max : Math.min(inventoryQty, limits.max);
 
     document.getElementById('modal-title').textContent = mode === 'buy' ? 'Покупка' : 'Продажа';
     document.getElementById('modal-good-name').textContent = currentGood.name;
     document.getElementById('modal-price').textContent = currentPrice;
     document.getElementById('modal-available').textContent = available;
-    document.getElementById('qty-value').textContent = 1;
+    document.getElementById('qty-value').textContent = limits.min;
 
     updateTotalPrice();
     document.getElementById('market-modal').style.display = 'flex';
@@ -135,8 +132,12 @@ function openTradeModal(goodId, mode, city) {
 function closeModal() { document.getElementById('market-modal').style.display = 'none'; }
 
 function changeQuantity(delta) {
-    let qty = Math.max(1, Math.min(999, parseInt(document.getElementById('qty-value').textContent) + delta));
-    document.getElementById('qty-value').textContent = qty;
+    const qtyElement = document.getElementById('qty-value');
+    const limits = getLimits(currentPrice);
+    let qty = parseInt(qtyElement.textContent) + delta;
+    
+    qty = Math.max(limits.min, Math.min(limits.max, qty));
+    qtyElement.textContent = qty;
     updateTotalPrice();
 }
 
@@ -148,6 +149,10 @@ function updateTotalPrice() {
 function confirmTrade() {
     if (!currentGood) return;
     const qty = parseInt(document.getElementById('qty-value').textContent);
+    const limits = getLimits(currentPrice);
+
+    // Защитная проверка лимитов
+    if (qty < limits.min || qty > limits.max) return alert("Недопустимое количество!");
 
     if (currentMode === 'buy') {
         const totalCost = qty * currentPrice;
@@ -168,15 +173,9 @@ function confirmTrade() {
     }
 
     savePlayer(player);
-    
-    if (typeof updateHeaderInfo === 'function') {
-        updateHeaderInfo(player);
-    }
-
+    if (typeof updateHeaderInfo === 'function') updateHeaderInfo(player);
     closeModal();
     
-    const city = window.CITIES
-        ? window.CITIES.find(c => c.id === player.cityId)
-        : cities.find(c => c.id === player.cityId);
+    const city = window.CITIES ? window.CITIES.find(c => c.id === player.cityId) : cities.find(c => c.id === player.cityId);
     renderMarketTable(city);
 }
